@@ -1,0 +1,33 @@
+{
+  "provider": "Meta",
+  "purpose": "meta-availability",
+  "endpoint": "https://api.meta.ai/v1/responses",
+  "method": "POST",
+  "model": "muse-spark-1.3",
+  "started_utc": "2026-11-15T18:28:58+00:00",
+  "ended_utc": "2026-11-15T18:29:00+00:00",
+  "http_status": 200,
+  "request_content_sha256": "8230c6709618b613d123f5151482bbcb6afc9e7a990df7b22939a1eebb070b91",
+  "max_output_tokens": 192,
+  "response_state": "completed",
+  "reply_present": true,
+  "returned_usage": {
+    "input_tokens": 25,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 28,
+    "output_tokens_details": {
+      "reasoning_tokens": 18
+    },
+    "total_tokens": 53
+  },
+  "input_tokens": 25,
+  "cached_input_tokens": 0,
+  "output_tokens": 28,
+  "reasoning_tokens_included_in_output": 18,
+  "estimated_usd": 0.00015025,
+  "expected_answer": "OK",
+  "observed_answer": "OK",
+  "matched": true
+}

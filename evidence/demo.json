@@ -1,0 +1,31 @@
+{
+  "title": "Cart quantity and total after refresh",
+  "expected": "After the reload, Quantity is 2 and Cart total is $48.00.",
+  "verdict": "Corrected",
+  "baseline": {
+    "outcome": "Failed",
+    "observation": "1 item · $24.00 after reload",
+    "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea",
+    "screenshot": "browser/baseline-refresh.jpg",
+    "evidence": "Kane recorded both page loads and the quantity mismatch."
+  },
+  "candidate": {
+    "outcome": "Passed",
+    "observation": "2 items · $48.00 after reload",
+    "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+    "screenshot": "browser/candidate-refresh.jpg",
+    "evidence": "Kane recorded both page loads and verified both fields."
+  },
+  "controls": [
+    {
+      "label": "Immediate cart update",
+      "outcome": "Passed in both versions",
+      "observation": "One increase showed 2 items and $48.00 without a reload in both carts."
+    }
+  ],
+  "incomplete": {
+    "outcome": "Incomplete",
+    "observation": "A separate run used a candidate URL that returned HTTP 404. Version preflight stopped the comparison before opening the browser."
+  },
+  "evidenceSource": "Recorded November 15, 2026 with Kane CLI 0.10.4 · Four validated Chrome evidence packs"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "0ecd124c-aa33-4218-b43f-0de2f95e7152",
+  "title": "Cart quantity and total after refresh",
+  "specSha256": "85e584967c786ba1dec83b14203621b9904d647946599fa3b9139b1b9f6a9aba",
+  "targets": {
+    "baseline": {
+      "url": "http://127.0.0.1:8741/baseline/",
+      "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea"
+    },
+    "candidate": {
+      "url": "http://127.0.0.1:8741/unavailable/",
+      "category": "infrastructure",
+      "reason": "Start URL returned HTTP 404."
+    }
+  },
+  "checks": [
+    {
+      "id": "refresh",
+      "expected": "After the reload, Quantity is 2 and Cart total is $48.00.",
+      "objectiveSha256": "533fded8d728325aa7313ade96a92f13059dda6bc094ea557422b97c2b51052b",
+      "outcome": "incomplete",
+      "baseline": {
+        "verdict": "incomplete",
+        "category": "execution",
+        "reason": "Browser run skipped because candidate preflight failed."
+      },
+      "candidate": {
+        "verdict": "incomplete",
+        "category": "infrastructure",
+        "reason": "Start URL returned HTTP 404."
+      }
+    },
+    {
+      "id": "live-total",
+      "expected": "Immediately after increasing, Quantity is 2 and Cart total is $48.00.",
+      "objectiveSha256": "078e8bf1815924466649ab0ac4d9422248ce983ef981496c10c755231f16652f",
+      "outcome": "incomplete",
+      "baseline": {
+        "verdict": "incomplete",
+        "category": "execution",
+        "reason": "Browser run skipped because candidate preflight failed."
+      },
+      "candidate": {
+        "verdict": "incomplete",
+        "category": "infrastructure",
+        "reason": "Start URL returned HTTP 404."
+      }
+    }
+  ]
+}

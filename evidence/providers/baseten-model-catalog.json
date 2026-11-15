@@ -1,0 +1,19 @@
+{
+  "provider": "Baseten",
+  "purpose": "baseten-model-catalog",
+  "endpoint": "https://inference.baseten.co/v1/models",
+  "method": "GET",
+  "model": "meta-models/muse-spark-open-1026",
+  "started_utc": "2026-11-15T18:28:49+00:00",
+  "ended_utc": "2026-11-15T18:28:51+00:00",
+  "http_status": 200,
+  "exact_alias_catalog": {
+    "id": "meta-models/muse-spark-open-1026",
+    "context_length": 1048576,
+    "pricing_usd_per_token": {
+      "prompt": "0.00000125",
+      "completion": "0.00000425",
+      "request": "0"
+    }
+  }
+}

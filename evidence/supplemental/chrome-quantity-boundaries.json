@@ -1,0 +1,60 @@
+{
+  "scope": "Supplemental local Chrome regression probe, independent of the Kane comparison and Kane control.",
+  "risk_checked": "The storage-order correction must persist the clamped upper bound and work for decrements.",
+  "tool": "Selenium WebDriver with headless Google Chrome",
+  "browser": "Chrome/157.0.8103.39",
+  "checked_at_utc": "2026-11-15T18:39:22+00:00",
+  "candidate_url": "http://127.0.0.1:8741/candidate/",
+  "candidate_version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+  "status": "PASS",
+  "observations": [
+    {
+      "action": "Reset cart",
+      "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+      "quantity": 1,
+      "total": "$24.00",
+      "increase_enabled": true,
+      "decrease_enabled": false
+    },
+    {
+      "action": "Increase three times from 1",
+      "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+      "quantity": 4,
+      "total": "$96.00",
+      "increase_enabled": true,
+      "decrease_enabled": true
+    },
+    {
+      "action": "Increase from 4 to the maximum",
+      "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+      "quantity": 5,
+      "total": "$120.00",
+      "increase_enabled": false,
+      "decrease_enabled": true
+    },
+    {
+      "action": "Refresh at maximum quantity",
+      "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+      "quantity": 5,
+      "total": "$120.00",
+      "increase_enabled": false,
+      "decrease_enabled": true
+    },
+    {
+      "action": "Decrease three times from 5",
+      "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+      "quantity": 2,
+      "total": "$48.00",
+      "increase_enabled": true,
+      "decrease_enabled": true
+    },
+    {
+      "action": "Refresh after decrease",
+      "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+      "quantity": 2,
+      "total": "$48.00",
+      "increase_enabled": true,
+      "decrease_enabled": true
+    }
+  ]
+}

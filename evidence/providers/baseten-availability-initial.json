@@ -1,0 +1,15 @@
+{
+  "provider": "Baseten",
+  "purpose": "baseten-availability-initial",
+  "endpoint": "https://inference.baseten.co/v1/chat/completions",
+  "method": "POST",
+  "model": "meta-models/muse-spark-open-1026",
+  "date_utc": "2026-11-15",
+  "approx_time_utc": "18:28:58 to 18:29:00",
+  "max_output_tokens": 256,
+  "http_status": null,
+  "result": "non-success-response",
+  "returned_usage": null,
+  "estimated_usd": null,
+  "note": "The request returned a JSON error string on the non-success path. The first recorder expected a JSON error object and stopped before writing HTTP status and usage. Usage and cost for this attempt are unknown."
+}

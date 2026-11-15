@@ -1,0 +1,253 @@
+{
+  "id": "4c8b13ad-7571-4436-9b6c-65794fe2b907",
+  "title": "Cart quantity and total after refresh",
+  "specSha256": "998e7c162a1345cc9c42ce40a375dc806e627927c44a8259c0c066943a82fb75",
+  "targets": {
+    "baseline": {
+      "url": "http://127.0.0.1:8741/baseline/",
+      "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea"
+    },
+    "candidate": {
+      "url": "http://127.0.0.1:8741/candidate/",
+      "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a"
+    }
+  },
+  "checks": [
+    {
+      "id": "refresh",
+      "expected": "After the reload, Quantity is 2 and Cart total is $48.00.",
+      "objectiveSha256": "533fded8d728325aa7313ade96a92f13059dda6bc094ea557422b97c2b51052b",
+      "outcome": "corrected",
+      "baseline": {
+        "observations": {
+          "fp_count_readout": "1",
+          "fp_total_readout": "$24.00"
+        },
+        "browserActions": [
+          {
+            "type": "navigate",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "navigate",
+            "status": "success"
+          },
+          {
+            "type": "wait",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "assert",
+            "status": "failed"
+          }
+        ],
+        "observationSource": "sealed browser action records",
+        "exitCode": 1,
+        "kaneCode": 740,
+        "verdict": "fail",
+        "category": "application",
+        "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea",
+        "kaneVersion": "0.10.4",
+        "kaneCredits": 21.418535,
+        "evidence": {
+          "sha256": "8e97a0d60257e994d8efe86822e33a3af51719f314e15b2490f088370b8f647e"
+        },
+        "upload": "uploaded"
+      },
+      "candidate": {
+        "observations": {
+          "fp_count_readout": "2",
+          "fp_total_readout": "$48.00"
+        },
+        "browserActions": [
+          {
+            "type": "navigate",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "navigate",
+            "status": "success"
+          },
+          {
+            "type": "wait",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "assert",
+            "status": "success"
+          }
+        ],
+        "observationSource": "sealed browser action records",
+        "exitCode": 0,
+        "kaneCode": 100,
+        "verdict": "pass",
+        "category": "application",
+        "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+        "kaneVersion": "0.10.4",
+        "kaneCredits": 21.20675,
+        "evidence": {
+          "sha256": "c9857e581665577503fa7aa608adb40a4c99b04448816b319cadfdcc0084d691"
+        },
+        "upload": "uploaded"
+      }
+    },
+    {
+      "id": "live-total",
+      "expected": "Immediately after increasing, Quantity is 2 and Cart total is $48.00.",
+      "objectiveSha256": "078e8bf1815924466649ab0ac4d9422248ce983ef981496c10c755231f16652f",
+      "outcome": "passed in both versions",
+      "baseline": {
+        "observations": {
+          "fp_count_readout": "2",
+          "fp_total_readout": "$48.00"
+        },
+        "browserActions": [
+          {
+            "type": "navigate",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "assert",
+            "status": "success"
+          }
+        ],
+        "observationSource": "sealed browser action records",
+        "exitCode": 0,
+        "kaneCode": 100,
+        "verdict": "pass",
+        "category": "application",
+        "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea",
+        "kaneVersion": "0.10.4",
+        "kaneCredits": 15.545560000000002,
+        "evidence": {
+          "sha256": "dacdf536b0589163f8e4eeb6b8448bc436467618b10c6d3ceab21befad497e3c"
+        },
+        "upload": "uploaded"
+      },
+      "candidate": {
+        "observations": {
+          "fp_count_readout": "2",
+          "fp_total_readout": "$48.00"
+        },
+        "browserActions": [
+          {
+            "type": "navigate",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "assert",
+            "status": "success"
+          }
+        ],
+        "observationSource": "sealed browser action records",
+        "exitCode": 0,
+        "kaneCode": 100,
+        "verdict": "pass",
+        "category": "application",
+        "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+        "kaneVersion": "0.10.4",
+        "kaneCredits": 15.098427500000001,
+        "evidence": {
+          "sha256": "e603b7a664994d1026e5ba05808874e8e5cbb34f67672475eb30a3850f3e0dfc"
+        },
+        "upload": "uploaded"
+      }
+    }
+  ]
+}

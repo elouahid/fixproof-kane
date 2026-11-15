@@ -1,0 +1,18 @@
+{
+  "runId": "41d25526-c3e8-4a9f-a993-d380b98f949b",
+  "date": "2026-11-15",
+  "command": "node compare.mjs cases/cart.json",
+  "exitCode": 2,
+  "outcome": "incomplete",
+  "reason": "Kane reported insufficient credits on both candidate runs (result code 560).",
+  "checks": {
+    "refresh": {
+      "baseline": { "verdict": "fail", "kaneCode": 710, "observation": "1 item and $24.00 after reload" },
+      "candidate": { "verdict": "incomplete", "kaneCode": 560 }
+    },
+    "live-total": {
+      "baseline": { "verdict": "pass", "kaneCode": 100, "observation": "2 items and $48.00 immediately after increase" },
+      "candidate": { "verdict": "incomplete", "kaneCode": 560 }
+    }
+  }
+}

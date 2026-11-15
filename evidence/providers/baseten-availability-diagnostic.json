@@ -1,0 +1,26 @@
+{
+  "provider": "Baseten",
+  "purpose": "baseten-availability-diagnostic",
+  "endpoint": "https://inference.baseten.co/v1/chat/completions",
+  "method": "POST",
+  "model": "meta-models/muse-spark-open-1026",
+  "started_utc": "2026-11-15T18:29:20+00:00",
+  "ended_utc": "2026-11-15T18:29:20+00:00",
+  "http_status": 400,
+  "request_content_sha256": "8230c6709618b613d123f5151482bbcb6afc9e7a990df7b22939a1eebb070b91",
+  "max_output_tokens": 256,
+  "response_state": null,
+  "reply_present": false,
+  "returned_usage": null,
+  "input_tokens": null,
+  "cached_input_tokens": null,
+  "output_tokens": null,
+  "reasoning_tokens_included_in_output": null,
+  "estimated_usd": null,
+  "expected_answer": "OK",
+  "observed_answer": "",
+  "matched": false,
+  "error": {
+    "message": "Model version wpgy40e is deactivated. It needs to be activated before running predictions"
+  }
+}

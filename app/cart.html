@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shopping cart | FixProof</title>
+  <link rel="stylesheet" href="/{{deployment}}/cart.css">
+  <script src="/{{deployment}}/cart.js" defer></script>
+</head>
+<body data-deployment="{{deployment}}">
+  <main>
+    <div class="heading">
+      <h1>Shopping cart</h1>
+      <button type="button" id="reset">Reset cart</button>
+    </div>
+    <section aria-labelledby="item-name">
+      <h2 id="item-name">Canvas tote</h2>
+      <p class="unit-price">$24.00 each</p>
+      <div class="quantity-controls">
+        <button type="button" id="decrease" aria-label="Decrease quantity">−</button>
+        <label for="quantity">Quantity</label>
+        <output id="quantity" aria-live="polite">1</output>
+        <button type="button" id="increase" aria-label="Increase quantity">+</button>
+      </div>
+      <div class="total">
+        <label for="cart-total">Cart total</label>
+        <output id="cart-total" aria-live="polite">$24.00</output>
+      </div>
+    </section>
+    <p class="version">{{deployment}} <code id="version">{{version}}</code></p>
+  </main>
+</body>
+</html>

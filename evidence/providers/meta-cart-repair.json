@@ -1,0 +1,30 @@
+{
+  "provider": "Meta",
+  "purpose": "meta-cart-repair",
+  "endpoint": "https://api.meta.ai/v1/responses",
+  "method": "POST",
+  "model": "muse-spark-1.3",
+  "started_utc": "2026-11-15T18:34:47+00:00",
+  "ended_utc": "2026-11-15T18:34:59+00:00",
+  "http_status": 200,
+  "request_content_sha256": "20bab331afd98dafd323fce1ca1272d2e148a3639fe99451efc4d57c85410392",
+  "max_output_tokens": 1800,
+  "response_state": "completed",
+  "reply_present": true,
+  "returned_usage": {
+    "input_tokens": 734,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 1105,
+    "output_tokens_details": {
+      "reasoning_tokens": 739
+    },
+    "total_tokens": 1839
+  },
+  "input_tokens": 734,
+  "cached_input_tokens": 0,
+  "output_tokens": 1105,
+  "reasoning_tokens_included_in_output": 739,
+  "estimated_usd": 0.00561375
+}
