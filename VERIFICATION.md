@@ -18,6 +18,12 @@ Recorded November 15, 2026 in Chrome with Kane CLI 0.10.4. Comparison `4c8b13ad-
 
 The fingerprints cover the served cart HTML, CSS and JavaScript. The server returns them in `X-FixProof-Version`. The browser screenshots show the build fingerprints, and the sealed navigation logs record them for the document fetches.
 
+## Full rerun after the free credit grant
+
+On November 15, 2026, `node compare.mjs cases/cart.json` completed with exit `0` in run `7fb17965-6f59-463d-a4fd-406478de64c7`. The case file, both objective hashes, and both build fingerprints matched the original comparison. The baseline again showed **1 item and $24.00** after reload. The candidate retained **2 items and $48.00**, and both immediate-update controls passed at **2 items and $48.00**.
+
+All four fresh Kane evidence packs passed L1 validation. Chrome recorded two HTTP 200 document loads for each reload check and one for each control, with the correct build fingerprint on every response. The fresh screenshots matched the packaged JPEGs byte-for-byte. [Fresh rerun results and evidence digests](evidence/free-credit-rerun.json)
+
 ## From failure to correction
 
 1. The defect was deliberately introduced in the synthetic baseline. The first Kane run clicked **Reset cart**, clicked **Increase quantity** once and reloaded. Its screenshot showed [2 items and $48.00 before reload](evidence/browser/original-before.jpg) and [1 item and $24.00 after reload](evidence/browser/original-after.jpg). It recorded a failing assertion, but `run_end.final_state` omitted both readings, so the first machine result stayed incomplete.
@@ -28,7 +34,7 @@ The fingerprints cover the served cart HTML, CSS and JavaScript. The server retu
 
 A separate repeat changed only the candidate URL to `/unavailable/`. Its actual HTTP 404 stopped preflight, left both comparisons **incomplete**, and returned exit `2`. [Recorded preflight report](evidence/incomplete.json)
 
-A later run of the documented command reproduced both baseline results. Kane then reported insufficient credits (`560`) on both candidate runs. That comparison returned exit `2` and is incomplete. New live runs require available Kane credits. [Recorded credit-limited repeat](evidence/credit-limited-repeat.json)
+Before the free credit grant, a repeat reproduced both baseline results and then returned insufficient credits (`560`) on both candidate runs. That comparison returned exit `2` and remains recorded as incomplete. [Recorded credit-limited repeat](evidence/credit-limited-repeat.json)
 
 ## Focused regression probe
 

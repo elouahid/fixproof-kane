@@ -13,9 +13,9 @@ Kane reported result code `710`. Both recorded assertion actuals agreed with the
 
 Source pack `164ad520-8508-44bf-bf5e-344b3fe2f1df.evidence`, SHA-256 `ef3ee73c3e109dd71947190f2848dc7113d52a82542d3aceff4e804f2bb8f24f`. The screenshots are pack steps `4-0-4` and `6-0-6`.
 
-## Final comparison
+## Original paired comparison
 
-The final comparison is run `4c8b13ad-7571-4436-9b6c-65794fe2b907`. The build identifiers below were visible in the screenshots and matched the `X-FixProof-Version` headers on the Chrome document requests.
+The original paired comparison is run `4c8b13ad-7571-4436-9b6c-65794fe2b907`. The build identifiers below were visible in the screenshots and matched the `X-FixProof-Version` headers on the Chrome document requests.
 
 - Baseline `b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea`
 - Candidate `ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a`
@@ -28,3 +28,7 @@ The final comparison is run `4c8b13ad-7571-4436-9b6c-65794fe2b907`. The build id
 | [Candidate with no reload](candidate-control.jpg) | 2 and $48.00 | Passed, `100` | 1 × HTTP 200 | `e603b7a664994d1026e5ba05808874e8e5cbb34f67672475eb30a3850f3e0dfc` |
 
 The baseline reload run saved both visible values before Kane stopped at the first mismatch, quantity 1 where it expected 2. The candidate reload and both live-total runs had separate successful quantity and total subassertions. The packs passed Kane's L1 validation. The reload screenshots came from pack step `7-0-7` and the control screenshots from pack step `5-0-5`.
+
+## Full rerun
+
+Run `7fb17965-6f59-463d-a4fd-406478de64c7` reproduced the same results. Its four validated evidence packs have distinct IDs and SHA-256 digests. Each contained a result screenshot that matched the corresponding file above byte-for-byte. [Fresh evidence manifest](../free-credit-rerun.json)
