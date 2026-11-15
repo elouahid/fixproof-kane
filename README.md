@@ -12,7 +12,18 @@ Use Node.js 20 or later. From the project folder, run:
 node app/server.mjs
 ```
 
-Open [the local FixProof preview](http://127.0.0.1:8741/). The baseline and candidate links open independent cart deployments. Use **Reset cart** before an interaction.
+Open [the local FixProof preview](http://127.0.0.1:8741/). With no report selected, it shows the recorded example. The baseline and candidate links open independent cart deployments. Use **Reset cart** before an interaction.
+
+## Open a saved comparison
+
+On Windows, leave the comparison server running and use a second port for the selected report. Replace the example path with the `report.json` path printed by the run.
+
+```powershell
+$env:FIXPROOF_CART_PORT = '8742'
+node app/server.mjs --report '.fixproof/runs/<run-id>/report.json'
+```
+
+Open [the saved comparison](http://127.0.0.1:8742/) or the [recorded example](http://127.0.0.1:8742/example/). The server reads the selected report at startup and serves only its display fields. Restart the preview to open a different report. Reports from before timestamps were recorded show the date as unavailable.
 
 ## Repeat the Kane comparison
 
@@ -37,7 +48,7 @@ The command exits `0` when all candidate checks pass with complete comparisons, 
 
 Copy `cases/cart.json`. Set the baseline and candidate URLs, and name the HTTP response header containing each build identifier. Both URLs need to answer `HEAD` and supply that header. The demo fingerprints the served cart HTML, CSS and JavaScript. Keep both builds stable during the run.
 
-For each check, supply the browser actions, the expected behavior and the exact visible text to observe. Use the literal placeholder `${appUrl}` when an action needs to reopen the relevant version URL. `samePageReload` is optional. Set it to `true` to require a return to the same URL following a click, or `false` to require an on-page observation following a click. Use test accounts or synthetic data suitable for Kane’s evidence capture.
+For each check, supply the browser instructions, the expected behavior, the exact visible text to observe, and an ordered `actionContract`. Schema version `2` supports named button clicks with an HTML ID and accessible name, followed by an optional same-page reload. Use the literal placeholder `${appUrl}` when an instruction needs to reopen the tested URL. Extra, missing, wrong-target or unconfirmed actions leave the result incomplete. The original `cases/cart-v1.json` is retained for historical comparison. Use test accounts or synthetic data suitable for Kane’s evidence capture.
 
 A conclusive result requires a compatible Kane exit and assertion outcome, a usable upload, a validated evidence pack, and matching browser action and field records. Authentication, infrastructure, upload and missing execution evidence can all produce an incomplete result. FixProof preserves every run and applies zero automatic edits. The documented correction used one candidate edit after the reproduced failure.
 

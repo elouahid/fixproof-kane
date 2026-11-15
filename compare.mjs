@@ -69,7 +69,7 @@ function markdown(report) {
   const observations = (side) => Object.entries(side?.observations ?? {})
     .filter(([, value]) => value !== null)
     .map(([key, value]) => `${key.replaceAll('_', ' ')} = ${value}`).join(', ') || '—';
-  const lines = [`# ${report.title}`, '', `Run ${report.id}`, ''];
+  const lines = [`# ${report.title}`, '', `Run ${report.id}`, '', `Started ${report.startedAt}`, ''];
   for (const side of ['baseline', 'candidate']) {
     const target = report.targets[side];
     lines.push(`- ${side} ${target.url} · ${target.version ?? 'build unavailable'}`);
@@ -105,9 +105,11 @@ async function main() {
     targets[side] = { url: spec[`${side}Url`], ...await probe(spec[`${side}Url`], spec.versionHeader) };
   }
   const report = {
-    id, title: spec.title, specSha256: hash(source), targets,
+    schemaVersion: 2, caseSchemaVersion: spec.schemaVersion,
+    id, title: spec.title, startedAt: new Date().toISOString(), finishedAt: null, specSha256: hash(source), targets,
     checks: spec.checks.map((check) => ({
       id: check.id, expected: check.expected, objectiveSha256: hash(objectiveFor(check)), outcome: 'incomplete',
+      observationLabels: Object.fromEntries(Object.entries(check.observations).map(([key, field]) => [key, field.label ?? key])),
     })),
   };
   const save = () => Promise.all([
@@ -129,6 +131,8 @@ async function main() {
       await save();
     }
   }
+  report.finishedAt = new Date().toISOString();
+  await save();
   console.log(`Read ${join(resultDir, 'report.md')}`);
   if (mode) process.exitCode = report.checks.some((check) => check.baseline?.verdict === 'incomplete') ? 2 : 0;
   else if (report.checks.some((check) => check.outcome === 'incomplete')) process.exitCode = 2;

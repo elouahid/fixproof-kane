@@ -1,0 +1,30 @@
+{
+  "provider": "Meta",
+  "purpose": "meta-action-contract-review",
+  "endpoint": "https://api.meta.ai/v1/responses",
+  "method": "POST",
+  "model": "muse-spark-1.3",
+  "started_utc": "2026-11-15T19:25:02+00:00",
+  "ended_utc": "2026-11-15T19:25:15+00:00",
+  "http_status": 200,
+  "request_content_sha256": "6286d12bf63c704779ac36918d96a762769165a0347d872d48a176010929ecb9",
+  "max_output_tokens": 1400,
+  "response_state": "completed",
+  "reply_present": true,
+  "returned_usage": {
+    "input_tokens": 2105,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 1054,
+    "output_tokens_details": {
+      "reasoning_tokens": 603
+    },
+    "total_tokens": 3159
+  },
+  "input_tokens": 2105,
+  "cached_input_tokens": 0,
+  "output_tokens": 1054,
+  "reasoning_tokens_included_in_output": 603,
+  "estimated_usd": 0.00711075
+}

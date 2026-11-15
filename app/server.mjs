@@ -1,9 +1,37 @@
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
+import { exampleImageNames, exampleView, reportView } from './report-view.mjs';
 
 const host = '127.0.0.1';
 const port = Number(process.env.FIXPROOF_CART_PORT ?? 8741);
+const [option, reportPath, ...extra] = process.argv.slice(2);
+if (option !== undefined && (option !== '--report' || !reportPath || extra.length)) {
+  console.error('Usage: node app/server.mjs [--report path/to/report.json]');
+  process.exit(2);
+}
+
+async function readJson(path) {
+  return JSON.parse(await readFile(path, 'utf8'));
+}
+
+const evidenceDirectory = new URL('../evidence/', import.meta.url);
+const [recorded, unavailable] = await Promise.all([
+  readJson(new URL('comparison.json', evidenceDirectory)),
+  readJson(new URL('incomplete.json', evidenceDirectory)),
+]);
+const example = exampleView(recorded, unavailable);
+let selected;
+if (reportPath) {
+  try {
+    selected = reportView(await readJson(reportPath));
+  } catch (error) {
+    const reason = error instanceof SyntaxError ? 'Invalid JSON.' : error.code ?? error.message;
+    console.error(`Could not open the selected FixProof report. ${reason}`);
+    process.exit(2);
+  }
+}
+
 const [template, stylesheet] = await Promise.all([
   readFile(new URL('./cart.html', import.meta.url), 'utf8'),
   readFile(new URL('./cart.css', import.meta.url), 'utf8'),
@@ -31,37 +59,26 @@ await Promise.all(previewFiles.map(async ([route, filename, type]) => {
   const body = await readFile(new URL(`./${filename}`, import.meta.url), 'utf8');
   resources.set(route, { body, type: `${type}; charset=utf-8` });
 }));
+resources.set('/example/', resources.get('/'));
 
-const imageTypes = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp' };
-const evidenceDirectory = new URL('../evidence/', import.meta.url);
+const jsonResource = (value) => ({ body: JSON.stringify(value), type: 'application/json; charset=utf-8' });
+resources.set('/proof/report.json', jsonResource(selected ?? example));
+resources.set('/proof/example.json', jsonResource(example));
 
-async function loadProof(pathname) {
-  const filename = pathname.slice('/proof/'.length);
-  const image = /^browser\/[a-zA-Z0-9_-][a-zA-Z0-9_.-]*\.(png|jpe?g|webp)$/.exec(filename);
-  if (filename !== 'demo.json' && !image) return null;
-
-  try {
-    const data = await readFile(new URL('demo.json', evidenceDirectory), 'utf8');
-    if (filename === 'demo.json') return { body: data, type: 'application/json; charset=utf-8' };
-
-    const { baseline, candidate } = JSON.parse(data);
-    if (filename !== baseline?.screenshot && filename !== candidate?.screenshot) return null;
-    return { body: await readFile(new URL(filename, evidenceDirectory)), type: imageTypes[image[1]] };
-  } catch (error) {
-    if (error.code === 'ENOENT' || error instanceof SyntaxError) return null;
-    throw error;
-  }
+for (const name of exampleImageNames) {
+  const path = `browser/${name}`;
+  const body = await readFile(new URL(path, evidenceDirectory));
+  resources.set(`/proof/${path}`, { body, type: 'image/jpeg' });
 }
 
-createServer(async (request, response) => {
-  const { pathname } = new URL(request.url, 'http://localhost');
+const server = createServer((request, response) => {
   if (request.method !== 'GET' && request.method !== 'HEAD') {
     response.writeHead(405, { Allow: 'GET, HEAD' }).end();
     return;
   }
-  const resource = pathname.startsWith('/proof/')
-    ? await loadProof(pathname).catch(() => null)
-    : resources.get(pathname);
+
+  const pathname = new URL(request.url, 'http://localhost').pathname;
+  const resource = resources.get(pathname);
   if (!resource) {
     response.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }).end('Page not found');
     return;
@@ -70,11 +87,14 @@ createServer(async (request, response) => {
   const headers = {
     'Cache-Control': 'no-store',
     'Content-Type': resource.type,
+    'X-Content-Type-Options': 'nosniff',
+    'Content-Security-Policy': "default-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'",
   };
   if (resource.version) headers['X-FixProof-Version'] = resource.version;
   response.writeHead(200, headers).end(resource.body);
-}).listen(port, host, () => {
-  console.log(`FixProof preview http://${host}:${port}/`);
+});
+server.listen(port, host, () => {
+  console.log(`FixProof preview http://${host}:${server.address().port}/`);
   for (const name of ['baseline', 'candidate']) {
     console.log(`${name} ${resources.get(`/${name}/`).version}`);
   }

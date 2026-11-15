@@ -2,7 +2,7 @@
 
 **Corrected.** After one increase and a reload, Kane observed **1 item and $24.00** on the baseline and **2 items and $48.00** on the candidate. The working control passed in both builds.
 
-Recorded November 15, 2026 in Chrome with Kane CLI 0.10.4. Comparison `4c8b13ad-7571-4436-9b6c-65794fe2b907`.
+The original paired comparison was recorded November 15, 2026 in Chrome with Kane CLI 0.10.4, run `4c8b13ad-7571-4436-9b6c-65794fe2b907`.
 
 | Check | Expected behavior | Baseline | Candidate | Outcome |
 | --- | --- | --- | --- | --- |
@@ -17,6 +17,42 @@ Recorded November 15, 2026 in Chrome with Kane CLI 0.10.4. Comparison `4c8b13ad-
 | Candidate | `http://127.0.0.1:8741/candidate/` | `ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a` |
 
 The fingerprints cover the served cart HTML, CSS and JavaScript. The server returns them in `X-FixProof-Version`. The browser screenshots show the build fingerprints, and the sealed navigation logs record them for the document fetches.
+
+## Action-procedure repair
+
+The supplied offline probe ran against checkpoint `22e9448a6db9409a546b6350af87b487a84b7fc7` before edits and reproduced the false correction. Both probes ran the actual cart JavaScript in stub DOM/storage with authored action records. Their provenance is offline. [Observed reproduction results](evidence/action-contract-offline.json)
+
+| Offline path | Readout | Original checker | Repaired checker |
+| --- | --- | --- | --- |
+| Baseline, one Increase then reload | 1 item · $24.00 | Fail | Fail |
+| Baseline, two Increases then reload | 2 items · $48.00 | Pass | **Incomplete** |
+| Candidate, one Increase then reload | 2 items · $48.00 | — | Pass |
+| Missing Reset, missing reload, or substituted Decrease | 2 items · $48.00 | — | **Incomplete** |
+| Immediate-update control on both builds | 2 items · $48.00 | — | Pass |
+
+Schema version 2 requires an ordered action contract. The checker binds each recorded click's step and single declared selector to the corresponding successful DOM click in the sealed runner log. It requires the exact number and order of actions and, for the persistence check, a successful same-URL reload before observing the values. Missing confirmations or conflicting action records leave the comparison incomplete. Meta reviewed the original failure and recommended the executed DOM binding and fallback rejection. [Provider review and usage](evidence/providers/README.md)
+
+| Case file | Schema | SHA-256 |
+| --- | --- | --- |
+| `cases/cart-v1.json` | Original, implicit version 1 | `998e7c162a1345cc9c42ce40a375dc806e627927c44a8259c0c066943a82fb75` |
+| `cases/cart.json` | Version 2 | `b537838948f879df662a6ff8df54e2b464a07c3c7f7d5a032c2fa77e5516b5f6` |
+
+The action instructions, business expectations, observation requirements and both build fingerprints match the original. Local review of the original packs confirmed the ordered DOM clicks in both complete paired comparisons. The first pack and infrastructure-limited attempts retain their recorded incomplete status. [Historical Kane audit](evidence/action-contract-history.json)
+
+## Fresh schema version 2 comparison
+
+On November 15, 2026, run `b124064e-b08d-46f6-825f-3a6485ca4f6c` completed with exit `0`. The baseline failed the reload check at **1 item and $24.00**. The candidate passed at **2 items and $48.00**, and the immediate-update check passed at **2 items and $48.00** on both builds. Both instructions and expected values matched the previous comparison.
+
+All four fresh packs passed Kane L1 validation and matched the ordered action contract. A separate pack audit confirmed two HTTP 200 document loads for each reload check and one for each control, with the expected build fingerprint on each response. The CLI obtains build fingerprints through preflight and post-run HEAD requests. The audit independently checked the actual document response headers. [Fresh comparison and pack references](evidence/action-contract-rerun.json)
+
+Chrome verified that the saved comparison preview matched the exact `report.json`, including its run ID, timestamp, expectations, observations, build fingerprints, and outcomes. A separate preflight report produced while the comparison server was stopped displayed its incomplete reasons. Open the exact completed local report from the project folder in PowerShell.
+
+```powershell
+$env:FIXPROOF_CART_PORT = '8742'
+node app/server.mjs --report '.fixproof/runs/b124064e-b08d-46f6-825f-3a6485ca4f6c/report.json'
+```
+
+Open [the saved comparison](http://127.0.0.1:8742/). The source ZIP also includes `evidence/action-contract-rerun.json`, a derived copy with the same preview fields and public-safe evidence references. Pass that path to `--report` from an unpacked copy. The recorded example is available at `/example/`.
 
 ## Full rerun after the free credit grant
 

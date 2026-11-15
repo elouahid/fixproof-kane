@@ -11,68 +11,29 @@
   <main>
     <header>
       <a class="brand" href="/">FixProof</a>
-      <nav aria-label="Cart versions">
-        <a href="/baseline/">Open baseline cart</a>
-        <a href="/candidate/">Open candidate cart</a>
+      <nav aria-label="Example resources">
+        <a id="example-link" href="/example/" hidden>Recorded example</a>
+        <a href="/baseline/">Baseline cart</a>
+        <a href="/candidate/">Candidate cart</a>
       </nav>
     </header>
 
-    <p id="loading" class="notice" role="status">Loading comparison evidence…</p>
+    <p id="loading" class="notice" role="status">Loading comparison…</p>
 
     <div id="comparison" hidden>
       <section class="intro" aria-labelledby="case-title">
+        <p class="source-label" id="source-label"></p>
         <h1 id="case-title"></h1>
-        <p class="status" id="verdict"></p>
-        <h2>Expected behavior</h2>
-        <p id="expected"></p>
+        <dl class="run-metadata">
+          <div><dt>Run ID</dt><dd><code id="run-id"></code></dd></div>
+          <div><dt id="date-label">Run date</dt><dd id="run-date"></dd></div>
+        </dl>
       </section>
-
-      <div class="observations">
-        <section class="card" id="baseline" aria-labelledby="baseline-title">
-          <div class="card-heading">
-            <h2 id="baseline-title">Original</h2>
-            <p class="status" data-field="outcome" hidden></p>
-          </div>
-          <p class="observation" data-field="observation"></p>
-          <figure data-field="screenshot" hidden>
-            <a><img alt="Original cart observation captured during execution"></a>
-          </figure>
-          <p class="evidence" data-field="evidence" hidden></p>
-          <details data-field="version" hidden>
-            <summary>Tested version <code data-field="short-version"></code></summary>
-            <code class="version" data-field="full-version"></code>
-          </details>
-        </section>
-
-        <section class="card" id="candidate" aria-labelledby="candidate-title">
-          <div class="card-heading">
-            <h2 id="candidate-title">Candidate</h2>
-            <p class="status" data-field="outcome" hidden></p>
-          </div>
-          <p class="observation" data-field="observation"></p>
-          <figure data-field="screenshot" hidden>
-            <a><img alt="Candidate cart observation captured during execution"></a>
-          </figure>
-          <p class="evidence" data-field="evidence" hidden></p>
-          <details data-field="version" hidden>
-            <summary>Tested version <code data-field="short-version"></code></summary>
-            <code class="version" data-field="full-version"></code>
-          </details>
-        </section>
-      </div>
-
-      <section class="checks" id="controls" aria-labelledby="control-title" hidden>
-        <h2 id="control-title">Controls</h2>
-        <ul id="control-list"></ul>
+      <div id="checks"></div>
+      <section class="checks" id="incomplete-example" aria-labelledby="incomplete-title" hidden>
+        <h2 id="incomplete-title">Incomplete execution example</h2>
+        <p id="incomplete-reason"></p>
       </section>
-
-      <section class="checks" id="incomplete" aria-labelledby="incomplete-title" hidden>
-        <h2 id="incomplete-title">Incomplete execution check</h2>
-        <div class="check-heading"><p class="status" data-field="outcome"></p></div>
-        <p data-field="observation"></p>
-      </section>
-
-      <p class="evidence" id="evidence-source" hidden></p>
     </div>
   </main>
 </body>

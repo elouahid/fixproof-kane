@@ -1,0 +1,9 @@
+Focused repair for `parseReadouts`/`verifiesSamePageReload`, gated to case schema v2 with exact contract: `[Reset cart, Increase quantity x1]` aliases `#reset|internal:role=button[name="Reset cart"i]`, `#increase|internal:role=button[name="Increase quantity"i]`, expected `2/$48.00` after one same-URL reload.
+
+Design:
+1. Keep legacy path for older case/evidence; add `check.mutationContract` branch. Report historical compatibility from records only.
+2. Replace loose `findIndex/slice` reload check with ordered validator: initial `navigate:success` exact `sameUrl(startURL)`; then exactly two `click:success` in contract order; then exactly one `refresh:success` or `navigate:success sameUrl` when `samePageReload:true`, zero when immediate-update control `false`. Allow only `wait/analyze/assert` interleaved. Any other `action_type`, `navigate` off-URL, `tab*`, `unknown/failing` mutating, or non-mutating tail after terminal `assert` -> `null`/incomplete, even if numeric assertion passes.
+3. Bind clicks to live evidence, not plan: require sealed `logs/0-run.log` ordered markers `Clicked via DOM locator: <alias> — success` for Reset then Increase. Ignore `action_params.locators`, top-level `selectors[{score:100,isXPath:false}]`, `coordinates/frame_info/until_attempts:null`, `visual_data.coordinates`, generated `locator().click()+mouse.click fallback` as candidates/plan.
+4. Reject on missing/out-of-order/extra/forged-misplaced markers, fallback-only success, ambiguous targeting.
+
+Tests to include: authored `Increase x2: 3/$72.00->2/$48.00` rejected; single-Increase buggy `2/$48.00->1/$24.00` fails assertion not passes; extra click/reload, off-URL nav, failed mutating retry, fixture-only locators without log witness, fallback coordinate click, immediate control with reload and vice-versa.

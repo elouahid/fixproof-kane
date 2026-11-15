@@ -13,15 +13,20 @@ FixProof verification runs with Kane. The coding and acceptance-review calls are
 | --- | --- | ---: | ---: | ---: | ---: |
 | [Meta availability](meta-availability.json) | HTTP 200, `OK` | 25 | 28 | 18 | $0.000150250 |
 | [Meta cart patch](meta-cart-repair.json) | HTTP 200, focused correction proposed | 734 | 1,105 | 739 | $0.005613750 |
+| [Meta action-contract review](meta-action-contract-review.json) | HTTP 200, action evidence reviewed | 2,105 | 1,054 | 603 | $0.007110750 |
 | [Baseten catalog](baseten-model-catalog.json) | HTTP 200, exact matched entry | — | — | — | — |
 | [Baseten availability](baseten-availability-initial.json) | API error, first recorder missed HTTP status | Unknown | Unknown | Unknown | Unknown |
 | [Baseten diagnostic](baseten-availability-diagnostic.json) | HTTP 400, configured model version deactivated | Unknown | Unknown | Unknown | Unknown |
 
-The two Meta requests returned 759 input tokens and 1,133 output tokens, including 757 reasoning tokens. The estimated Meta total was $0.005764000. The first Baseten attempt's usage was unrecorded, and the diagnostic response returned no usage. No paid top-ups were made.
+The three Meta requests returned 2,864 input tokens and 2,187 output tokens, including 1,360 reasoning tokens. The estimated Meta total was $0.012874750. The first Baseten attempt's usage was unrecorded, and the diagnostic response returned no usage. No paid top-ups were made.
 
 ## Meta contribution
 
 The [submitted prompt](meta-cart-repair-prompt.md) included the actual Kane Chrome observations from before and after a reload, the exact tested baseline version, the unchanged expectation and control, and the starting candidate source. The [returned proposal](meta-cart-repair-answer.md) located the write to local storage before the clamped quantity update and proposed moving it immediately after that update. It also identified the risk of changing the maximum item quantity. The proposal's exploratory statements are separate from the browser findings in the verification report.
+
+The [action-contract review prompt](meta-action-contract-review-prompt.md) included the authored offline reproduction, the parser at checkpoint `22e9448`, and a sanitized excerpt of actual Kane action markers. One bounded request to `muse-spark-1.3` in Standard mode returned a design review. Meta recommended matching the ordered mutation sequence and binding each click to the successful DOM locator in the sealed runner log. It flagged fallback-only clicks, extra reloads, off-URL navigation, failed mutation attempts, and missing or misplaced witnesses as counterexamples. [Returned review](meta-action-contract-review-answer.md)
+
+The action-contract request used the existing promotional authorization. Current Meta standard rates were verified again, and promotion expiry remained unverified. The repair used the recorded Baseten deactivation to avoid further requests to that route. [Meta pricing](https://dev.meta.ai/docs/pricing-rate-limits)
 
 ## Baseten review brief
 

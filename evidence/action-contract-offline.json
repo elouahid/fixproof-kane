@@ -1,0 +1,139 @@
+{
+  "provenance": "Offline reproduction only. The actual cart JavaScript ran in stub DOM/storage. Browser action records and runner logs were authored fixtures. Neither probe used Kane, a live browser, or network traffic.",
+  "before": {
+    "sourceCommit": "22e9448a6db9409a546b6350af87b487a84b7fc7",
+    "attachedProbeSha256": "577662ead444cae55a7655a46df8a18cd8d1d13a1ace0fc932c7b777e19f7947",
+    "exitCode": 1,
+    "exactRequiredPath": {
+      "observed": {
+        "beforeReload": {
+          "count": "2",
+          "total": "$48.00"
+        },
+        "count": "1",
+        "total": "$24.00"
+      },
+      "verdict": "fail"
+    },
+    "changedPath": {
+      "observed": {
+        "beforeReload": {
+          "count": "3",
+          "total": "$72.00"
+        },
+        "count": "2",
+        "total": "$48.00"
+      },
+      "verdict": "pass"
+    },
+    "comparisonOfIdenticalBuggyImplementation": "corrected"
+  },
+  "after": {
+    "command": "node --test test/action-contract.test.mjs",
+    "exitCode": 0,
+    "caseSha256": "b537838948f879df662a6ff8df54e2b464a07c3c7f7d5a032c2fa77e5516b5f6",
+    "observedFixtures": {
+      "baselineOneIncrease": {
+        "immediate": {
+          "quantity": "2",
+          "total": "$48.00"
+        },
+        "observed": {
+          "quantity": "1",
+          "total": "$24.00"
+        },
+        "asserted": "failed",
+        "verdict": "fail"
+      },
+      "candidateOneIncrease": {
+        "immediate": {
+          "quantity": "2",
+          "total": "$48.00"
+        },
+        "observed": {
+          "quantity": "2",
+          "total": "$48.00"
+        },
+        "asserted": "passed",
+        "verdict": "pass"
+      },
+      "baselineTwoIncreases": {
+        "immediate": {
+          "quantity": "3",
+          "total": "$72.00"
+        },
+        "observed": {
+          "quantity": "2",
+          "total": "$48.00"
+        },
+        "asserted": "passed",
+        "verdict": "incomplete",
+        "reason": "Expected 3 actions after entry but recorded 4."
+      },
+      "missingReset": {
+        "immediate": {
+          "quantity": "2",
+          "total": "$48.00"
+        },
+        "observed": {
+          "quantity": "2",
+          "total": "$48.00"
+        },
+        "asserted": "passed",
+        "verdict": "incomplete",
+        "reason": "Expected 3 actions after entry but recorded 2."
+      },
+      "missingReload": {
+        "immediate": {
+          "quantity": "2",
+          "total": "$48.00"
+        },
+        "observed": {
+          "quantity": "2",
+          "total": "$48.00"
+        },
+        "asserted": "passed",
+        "verdict": "incomplete",
+        "reason": "Expected 3 actions after entry but recorded 2."
+      },
+      "wrongResetTarget": {
+        "immediate": {
+          "quantity": "2",
+          "total": "$48.00"
+        },
+        "observed": {
+          "quantity": "2",
+          "total": "$48.00"
+        },
+        "asserted": "passed",
+        "verdict": "incomplete",
+        "reason": "Action 1 must be a confirmed DOM click on Reset cart."
+      },
+      "baselineLiveControl": {
+        "immediate": {
+          "quantity": "2",
+          "total": "$48.00"
+        },
+        "observed": {
+          "quantity": "2",
+          "total": "$48.00"
+        },
+        "asserted": "passed",
+        "verdict": "pass"
+      },
+      "candidateLiveControl": {
+        "immediate": {
+          "quantity": "2",
+          "total": "$48.00"
+        },
+        "observed": {
+          "quantity": "2",
+          "total": "$48.00"
+        },
+        "asserted": "passed",
+        "verdict": "pass"
+      }
+    },
+    "comparisonOfIdenticalBuggyImplementation": "incomplete"
+  }
+}
