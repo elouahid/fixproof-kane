@@ -6,6 +6,7 @@ import { readPackObservations } from './lib/assertions.mjs';
 import { invokeKane } from './lib/kane.mjs';
 import { objectiveFor } from './lib/objective.mjs';
 import { classify, compareVerdicts } from './lib/result.mjs';
+import { readSelectedSources } from './lib/source-selection.mjs';
 import { parseSpec } from './lib/spec.mjs';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
@@ -90,16 +91,34 @@ function markdown(report) {
   return `${lines.join('\n')}\n`;
 }
 
+function parseOptions(args) {
+  const usage = 'Usage: node compare.mjs [case.json] [--baseline] [--candidate-source path ...]';
+  const casePath = args[0] && !args[0].startsWith('--') ? args.shift() : null;
+  const sourcePaths = [];
+  let baselineOnly = false;
+  while (args.length) {
+    const flag = args.shift();
+    if (flag === '--baseline' && !baselineOnly) {
+      baselineOnly = true;
+    } else if (flag === '--candidate-source' && args[0] && !args[0].startsWith('--')) {
+      sourcePaths.push(args.shift());
+    } else {
+      throw new Error(usage);
+    }
+  }
+  return { casePath, baselineOnly, sourcePaths };
+}
+
 async function main() {
-  const [casePath, mode, ...extra] = process.argv.slice(2);
-  if (extra.length || (mode && mode !== '--baseline')) throw new Error('Usage: node compare.mjs [case.json] [--baseline]');
+  const { casePath, baselineOnly, sourcePaths } = parseOptions(process.argv.slice(2));
   const source = await readFile(casePath ? resolve(casePath) : join(root, 'cases', 'cart.json'), 'utf8');
   const spec = parseSpec(source);
+  const sources = sourcePaths.length ? await readSelectedSources(root, sourcePaths) : null;
   const id = randomUUID();
   const resultDir = join(root, '.fixproof', 'runs', id);
   await mkdir(resultDir, { recursive: true });
   await writeFile(join(resultDir, 'case.json'), source, { flag: 'wx' });
-  const sides = mode ? ['baseline'] : ['baseline', 'candidate'];
+  const sides = baselineOnly ? ['baseline'] : ['baseline', 'candidate'];
   const targets = {};
   for (const side of ['baseline', 'candidate']) {
     targets[side] = { url: spec[`${side}Url`], ...await probe(spec[`${side}Url`], spec.versionHeader) };
@@ -112,6 +131,7 @@ async function main() {
       observationLabels: Object.fromEntries(Object.entries(check.observations).map(([key, field]) => [key, field.label ?? key])),
     })),
   };
+  if (sources) report.candidateSource = { files: sources, stable: false };
   const save = () => Promise.all([
     writeFile(join(resultDir, 'report.json'), json(report)),
     writeFile(join(resultDir, 'report.md'), markdown(report)),
@@ -131,10 +151,14 @@ async function main() {
       await save();
     }
   }
+  if (sources) {
+    const finalSources = await readSelectedSources(root, sourcePaths).catch(() => null);
+    report.candidateSource.stable = JSON.stringify(sources) === JSON.stringify(finalSources);
+  }
   report.finishedAt = new Date().toISOString();
   await save();
   console.log(`Read ${join(resultDir, 'report.md')}`);
-  if (mode) process.exitCode = report.checks.some((check) => check.baseline?.verdict === 'incomplete') ? 2 : 0;
+  if (baselineOnly) process.exitCode = report.checks.some((check) => check.baseline?.verdict === 'incomplete') ? 2 : 0;
   else if (report.checks.some((check) => check.outcome === 'incomplete')) process.exitCode = 2;
   else if (report.checks.some((check) => check.candidate.verdict === 'fail')) process.exitCode = 1;
 }

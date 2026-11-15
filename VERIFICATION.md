@@ -75,3 +75,7 @@ Before the free credit grant, a repeat reproduced both baseline results and then
 ## Focused regression probe
 
 Meta flagged the cart’s upper limit. An independent real Chrome probe increased to five items, verified the disabled increase button and **$120.00**, and reloaded. It then decreased to two and confirmed **$48.00** persisted after another reload. [Supplemental Chrome readings](evidence/supplemental/chrome-quantity-boundaries.json)
+
+## Repair brief and unchanged retest
+
+The separate handoff demonstration deliberately seeded the known bug in an isolated candidate. The saved candidate failed at **1 item and $24.00** after reload. Meta received the generated brief and one selected source file. The reviewed edit was applied in the isolated copy, and the exact command in the brief exited `0` with **2 items and $48.00** on the corrected candidate. Both controls passed. The earlier incomplete baseline capture is preserved in the original report. [Handoff, run IDs, replay commands and recording sequence](evidence/repair-brief/README.md)

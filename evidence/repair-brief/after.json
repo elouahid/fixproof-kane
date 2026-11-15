@@ -1,0 +1,223 @@
+{
+  "phase": "after",
+  "id": "b14bfe56-2679-4b26-b815-773ce9d1475b",
+  "title": "Cart quantity and total after refresh",
+  "schemaVersion": 2,
+  "caseSchemaVersion": 2,
+  "startedAt": "2026-11-15T20:51:02.678Z",
+  "finishedAt": "2026-11-15T20:56:27.371Z",
+  "specSha256": "fd3c4e496757168131283e37d420d156f557cfcc1683105994e8dfb5d56a61e2",
+  "comparisonExitCode": 0,
+  "targets": {
+    "baseline": {
+      "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea"
+    },
+    "candidate": {
+      "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a"
+    }
+  },
+  "candidateSource": {
+    "files": [
+      {
+        "path": "app/candidate.js",
+        "sha256": "f467396af5c96c8aec0c8893dbfe89000fd0656430110f0bd781bb42444f10fc"
+      }
+    ],
+    "stable": true
+  },
+  "provenance": "Derived from a saved comparison of the isolated, deliberately buggy cart fixture. Save exact Kane run IDs and pack SHA-256 values. Browser document responses were checked separately in the HAR evidence.",
+  "checks": [
+    {
+      "id": "refresh",
+      "expected": "After the reload, Quantity is 2 and Cart total is $48.00.",
+      "outcome": "corrected",
+      "objectiveSha256": "533fded8d728325aa7313ade96a92f13059dda6bc094ea557422b97c2b51052b",
+      "observationLabels": {
+        "fp_count_readout": "Quantity",
+        "fp_total_readout": "Cart total"
+      },
+      "baseline": {
+        "verdict": "fail",
+        "observations": {
+          "fp_count_readout": "1",
+          "fp_total_readout": "$24.00"
+        },
+        "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea",
+        "kaneCode": 710,
+        "kaneCredits": 19.03419,
+        "procedure": [
+          {
+            "type": "click",
+            "step": 2,
+            "target": "Reset cart",
+            "selector": "internal:role=button[name=\"Reset cart\"i]"
+          },
+          {
+            "type": "click",
+            "step": 3,
+            "target": "Increase quantity",
+            "selector": "internal:role=button[name=\"Increase quantity\"i]"
+          },
+          {
+            "type": "reload",
+            "step": 4
+          }
+        ],
+        "evidence": {
+          "kaneRunId": "23aee6ed-fa3a-4d48-a42f-2705f7043b61",
+          "sha256": "50ed94beb91c4697b7515bc517c4c7aa04b8b2600d0c3bf674bd63acd322c99b",
+          "validation": "Kane L1 valid"
+        },
+        "documentResponses": [
+          {
+            "status": 200,
+            "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea"
+          },
+          {
+            "status": 200,
+            "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea"
+          }
+        ],
+        "screenshot": {
+          "step": "7-0-7",
+          "sha256": "d2df421dd08ab343d9b6bb0f088945bcd97f8d917924df4d217d2a1a9648ea8a"
+        }
+      },
+      "candidate": {
+        "verdict": "pass",
+        "observations": {
+          "fp_count_readout": "2",
+          "fp_total_readout": "$48.00"
+        },
+        "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+        "kaneCode": 100,
+        "kaneCredits": 18.197432499999998,
+        "procedure": [
+          {
+            "type": "click",
+            "step": 2,
+            "target": "Reset cart",
+            "selector": "internal:role=button[name=\"Reset cart\"i]"
+          },
+          {
+            "type": "click",
+            "step": 3,
+            "target": "Increase quantity",
+            "selector": "internal:role=button[name=\"Increase quantity\"i]"
+          },
+          {
+            "type": "reload",
+            "step": 4
+          }
+        ],
+        "evidence": {
+          "kaneRunId": "1d410019-22bb-4df6-b17f-7859e1d98e95",
+          "sha256": "8ce1c944a4a74439c23a12bddecb43cf06ab0eddb0f7d94999031a7a7701b8fe",
+          "validation": "Kane L1 valid"
+        },
+        "documentResponses": [
+          {
+            "status": 200,
+            "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a"
+          },
+          {
+            "status": 200,
+            "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a"
+          }
+        ],
+        "screenshot": {
+          "step": "7-0-7",
+          "sha256": "14557bc82a2b243810373da2426b6d739df1305821097e50eb176db9f7129e51"
+        }
+      }
+    },
+    {
+      "id": "live-total",
+      "expected": "Immediately after increasing, Quantity is 2 and Cart total is $48.00.",
+      "outcome": "passed in both versions",
+      "objectiveSha256": "078e8bf1815924466649ab0ac4d9422248ce983ef981496c10c755231f16652f",
+      "observationLabels": {
+        "fp_count_readout": "Quantity",
+        "fp_total_readout": "Cart total"
+      },
+      "baseline": {
+        "verdict": "pass",
+        "observations": {
+          "fp_count_readout": "2",
+          "fp_total_readout": "$48.00"
+        },
+        "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea",
+        "kaneCode": 100,
+        "kaneCredits": 16.6452575,
+        "procedure": [
+          {
+            "type": "click",
+            "step": 2,
+            "target": "Reset cart",
+            "selector": "internal:role=button[name=\"Reset cart\"i]"
+          },
+          {
+            "type": "click",
+            "step": 3,
+            "target": "Increase quantity",
+            "selector": "internal:role=button[name=\"Increase quantity\"i]"
+          }
+        ],
+        "evidence": {
+          "kaneRunId": "3e7ecd6f-8cae-4ffe-883d-23ac143d4997",
+          "sha256": "ad13acd69ccfe7fb79e4e1c108c7b2aa426c9aef4e9f6a692b2f79c70ae6b238",
+          "validation": "Kane L1 valid"
+        },
+        "documentResponses": [
+          {
+            "status": 200,
+            "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea"
+          }
+        ],
+        "screenshot": {
+          "step": "6-0-6",
+          "sha256": "ec4b44c62e2767622c4ac44f175105174f8f537ac3d4b23707a71e78168d9b77"
+        }
+      },
+      "candidate": {
+        "verdict": "pass",
+        "observations": {
+          "fp_count_readout": "2",
+          "fp_total_readout": "$48.00"
+        },
+        "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+        "kaneCode": 100,
+        "kaneCredits": 15.571507500000001,
+        "procedure": [
+          {
+            "type": "click",
+            "step": 2,
+            "target": "Reset cart",
+            "selector": "internal:role=button[name=\"Reset cart\"i]"
+          },
+          {
+            "type": "click",
+            "step": 3,
+            "target": "Increase quantity",
+            "selector": "internal:role=button[name=\"Increase quantity\"i]"
+          }
+        ],
+        "evidence": {
+          "kaneRunId": "dd01c9a1-f3e7-4c7b-92d2-d0949cfa3620",
+          "sha256": "6728eb192cf5e9d314a2de2de4e2e286b29ea6339a9adf16420f54b8fedff03a",
+          "validation": "Kane L1 valid"
+        },
+        "documentResponses": [
+          {
+            "status": 200,
+            "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a"
+          }
+        ],
+        "screenshot": {
+          "step": "5-0-5",
+          "sha256": "5f9eb6664c835905b965331572c438cd22f1ca9bef3aae1c74e71409181c1280"
+        }
+      }
+    }
+  ]
+}

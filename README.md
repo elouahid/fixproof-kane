@@ -44,6 +44,22 @@ Open `report.md` in the result directory printed by the command. The directory a
 
 The command exits `0` when all candidate checks pass with complete comparisons, `1` when a candidate check fails with evidence, and `2` when any comparison is incomplete. A baseline-only reproduction is available via `node compare.mjs cases/cart.json --baseline`. It preserves its runs and exits `0` when the baseline results are conclusive, including a reproduced bug.
 
+## Export a repair brief
+
+From the project root, select a completed comparison report, its exact case file, and each candidate source file you want the coding agent to inspect. Repeat `--source` for additional files.
+
+```powershell
+node repair-brief.mjs --report '.fixproof/runs/<run-id>/report.json' --case 'cases/cart.json' --source 'app/candidate.js' > repair-brief.md
+```
+
+The brief includes the required procedure, observed results, evidence digests, and a command to repeat the same case and controls. Its source references are project-relative and include current SHA-256 hashes. Give the agent the brief and access to only those files. Review the proposed edit, then run the command printed in the brief.
+
+To record local source hashes for future briefs, run the comparison with `--candidate-source` once per selected file. FixProof captures the hashes before and after the run. If the hashes were stable, the brief identifies current files that differ from the saved snapshot. The report's build fingerprints identify the tested deployments. Local snapshots record file identity at the comparison boundaries.
+
+```powershell
+node compare.mjs cases/cart.json --candidate-source app/candidate.js
+```
+
 ## Use your own case
 
 Copy `cases/cart.json`. Set the baseline and candidate URLs, and name the HTTP response header containing each build identifier. Both URLs need to answer `HEAD` and supply that header. The demo fingerprints the served cart HTML, CSS and JavaScript. Keep both builds stable during the run.
@@ -55,5 +71,6 @@ A conclusive result requires a compatible Kane exit and assertion outcome, a usa
 ## Review materials
 
 - [Actual before/after evidence](VERIFICATION.md)
+- [Repair brief and demonstrated handoff](evidence/repair-brief/README.md)
 - [Meta and Baseten contribution and usage](evidence/providers/README.md)
 - [Submission fields](publication/SUBMISSION.md) and [two post drafts](publication/POSTS.md)
