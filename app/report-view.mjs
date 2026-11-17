@@ -51,6 +51,8 @@ export function reportView(report) {
   });
   return {
     kind: 'saved',
+    recording: null,
+    comparisonExit: null,
     id: report.id,
     title: report.title,
     startedAt: timestamp(report.startedAt),

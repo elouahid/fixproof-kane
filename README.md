@@ -1,78 +1,85 @@
 # FixProof
 
-FixProof runs the same browser check on a baseline and a candidate, then reports what changed. Give it two application URLs, an expected behavior and one to three controls. Kane CLI drives Chrome. The report records each build fingerprint, browser readouts and the validated evidence pack.
+FixProof uses Kane CLI to check whether a proposed bug fix works **and whether it breaks behavior that used to pass**. It runs the same browser actions on a baseline and a candidate and saves the observations for review.
 
-The example cart uses synthetic data and a deliberately introduced bug. Increasing one $24.00 item to two shows $48.00 immediately. The baseline stores the previous quantity, so a reload drops back to one item and $24.00. The candidate stores the updated quantity. The no-reload check verifies that the live quantity and total still update.
+**[Watch the 3:07 walkthrough](https://youtu.be/SW1Dju1sNsQ)** · **[Inspect the recorded evidence](evidence/control-regression/README.md)** · **[Open the local viewer](#view-the-saved-runs)**
 
-## Open the local preview
+In the synthetic cart demo, both candidates saved the new quantity. The difference was what the customer saw immediately after clicking **Increase**. Each row comes from a separate recorded comparison with the same case and controls.
 
-Use Node.js 20 or later. From the project folder, run:
+| Candidate and saved report | After reload | Immediately after the click | Recorded comparison exit |
+| --- | --- | --- | --- |
+| [Deliberately flawed correction](evidence/control-regression/flawed.json) | 2 items · $48 · passed | **1 item · $24 · regressed** | **1** |
+| [Reviewed correction](evidence/control-regression/reviewed.json) | 2 items · $48 · passed | **2 items · $48 · passed** | **0** |
+
+[![The FixProof viewer showing the recorded rejection of the flawed correction and the immediate-update control.](docs/images/control-regression.png)](evidence/control-regression/README.md)
+
+The baseline showed 2 items and $48 immediately in both runs. The operator captured each comparison's process exit. Four other attempts ended incomplete and remain available alongside the two complete reports. [Run manifest](evidence/control-regression/manifest.json) · [All six attempts](evidence/control-regression/README.md#every-attempt-is-retained) · [Repair brief for the rejected fix](evidence/control-regression/repair-brief.md)
+
+## View the saved runs
+
+From the repository root, start the viewer with **Node.js 20 or later**. Viewing saved results requires no account, Kane installation, or credits.
 
 ```sh
 node app/server.mjs
 ```
 
-Open [the local FixProof preview](http://127.0.0.1:8741/). With no report selected, it shows the recorded example. The baseline and candidate links open independent cart deployments. Use **Reset cart** before an interaction.
+Open the [flawed correction](http://127.0.0.1:8741/?run=flawed) or the [reviewed correction](http://127.0.0.1:8741/?run=reviewed). Both are available on the same server. The home page opens the flawed comparison. The viewer shows the recorded run ID, readouts, and tested build fingerprints. The recorded exit is unavailable when the viewer cannot verify its source.
 
-## Open a saved comparison
+The local server also serves a [current baseline cart](http://127.0.0.1:8741/baseline/) and a [current reviewed candidate cart](http://127.0.0.1:8741/candidate/). These interactive pages use the JavaScript in this checkout. Inspect the [deliberately flawed source snapshot](evidence/control-regression/deliberately-flawed-candidate.js) to see the version that omitted the immediate redraw.
 
-On Windows, leave the comparison server running and use a second port for the selected report. Replace the example path with the `report.json` path printed by the run.
+To inspect a different saved report, stop the server and restart it with its path. For example, this opens an earlier comparison in which the evidence was incomplete.
 
-```powershell
-$env:FIXPROOF_CART_PORT = '8742'
-node app/server.mjs --report '.fixproof/runs/<run-id>/report.json'
+```sh
+node app/server.mjs --report evidence/incomplete.json
 ```
 
-Open [the saved comparison](http://127.0.0.1:8742/) or the [recorded example](http://127.0.0.1:8742/example/). The server reads the selected report at startup and serves only its display fields. Restart the preview to open a different report. Reports from before timestamps were recorded show the date as unavailable.
+### Optional static preview
 
-## Repeat the Kane comparison
+To host just the two recorded comparisons, export the read-only site. This uses the same viewer and saved evidence as the local server.
 
-Install Chrome and sign in to a TestMu AI account with available Kane credits. The workflow was verified on Windows with Kane CLI 0.10.4. [Kane CLI quickstart](https://www.testmuai.com/docs/kane-cli-quickstart)
+```sh
+node scripts/export-preview.mjs
+```
+
+Serve the contents of `dist/preview/` with a static web server. To use the built-in Python server, run the following command.
+
+```sh
+python -m http.server 8742 --bind 127.0.0.1 --directory dist/preview
+```
+
+Open [the static preview](http://127.0.0.1:8742/). It includes the recorded screenshots and build fingerprints. The interactive cart applications are available through the Node server.
+
+## Run a new Kane comparison
+
+Live verification drives Chrome and uses a TestMu AI account with Kane credits. The documented integration used Kane CLI 0.10.4 on Windows. [Kane CLI quickstart](https://www.testmuai.com/docs/kane-cli-quickstart)
 
 ```sh
 npm install --global @testmuai/kane-cli@0.10.4
 kane-cli login --oauth
 ```
 
-Leave the local server running and start the comparison in another terminal.
+Keep `node app/server.mjs` running on the default port. In a second terminal, run the frozen case against the **currently served builds**.
 
 ```sh
-node compare.mjs cases/cart.json
-```
-
-Open `report.md` in the result directory printed by the command. The directory also contains `report.json`, the exact case, the original Kane output streams, and any sealed evidence packs. Keep generated `.fixproof/` folders private. Kane packs can contain TestMu AI account metadata and application network logs. The packaged screenshots and audit provide a review path from the recorded run. [Recorded verification](VERIFICATION.md) · [Kane evidence documentation](https://www.testmuai.com/docs/kane-cli-evidence)
-
-The command exits `0` when all candidate checks pass with complete comparisons, `1` when a candidate check fails with evidence, and `2` when any comparison is incomplete. A baseline-only reproduction is available via `node compare.mjs cases/cart.json --baseline`. It preserves its runs and exits `0` when the baseline results are conclusive, including a reproduced bug.
-
-## Export a repair brief
-
-From the project root, select a completed comparison report, its exact case file, and each candidate source file you want the coding agent to inspect. Repeat `--source` for additional files.
-
-```powershell
-node repair-brief.mjs --report '.fixproof/runs/<run-id>/report.json' --case 'cases/cart.json' --source 'app/candidate.js' > repair-brief.md
-```
-
-The brief includes the required procedure, observed results, evidence digests, and a command to repeat the same case and controls. Its source references are project-relative and include current SHA-256 hashes. Give the agent the brief and access to only those files. Review the proposed edit, then run the command printed in the brief.
-
-To record local source hashes for future briefs, run the comparison with `--candidate-source` once per selected file. FixProof captures the hashes before and after the run. If the hashes were stable, the brief identifies current files that differ from the saved snapshot. The report's build fingerprints identify the tested deployments. Local snapshots record file identity at the comparison boundaries.
-
-```powershell
 node compare.mjs cases/cart.json --candidate-source app/candidate.js
 ```
 
+Open `report.md` or `report.json` in the output directory printed by the command. Exit `0` means all candidate checks passed with complete comparisons. Exit `1` means a candidate check failed with evidence. Exit `2` means a comparison is incomplete. A baseline-only run (`--baseline`) has its own exit convention and can exit `0` after conclusively reproducing a bug.
+
+Keep generated `.fixproof/` directories private. Raw Kane packs can contain account metadata and application network logs. The checked-in evidence includes sanitized reports and selected synthetic-cart screenshots.
+
+## Give an observed failure to a coding agent
+
+Choose the exact case, saved report, and candidate source files. The repair brief includes expected actions, observed values, evidence digests, and the command to run the same case again. Source hashes let a reviewer check whether the file in hand matches the one captured during the run.
+
+```sh
+node repair-brief.mjs --report ".fixproof/runs/<run-id>/report.json" --case cases/cart.json --source app/candidate.js
+```
+
+Review the proposed edit before rerunning the case and controls. FixProof applies no automatic changes. The flawed edit in the demonstration was constructed deliberately. An earlier, separate handoff records Meta's actual proposal and its reviewed retest. [Recorded repair handoff](evidence/repair-brief/README.md)
+
 ## Use your own case
 
-Copy `cases/cart.json`. Set the baseline and candidate URLs, and name the HTTP response header containing each build identifier. Both URLs need to answer `HEAD` and supply that header. The demo fingerprints the served cart HTML, CSS and JavaScript. Keep both builds stable during the run.
+Copy [the cart case](cases/cart.json) and set both URLs and the HTTP header that identifies each build. Both deployments must answer `HEAD` and keep a stable build fingerprint during the comparison. Supply the expected visible values, a primary check, and one to three controls.
 
-For each check, supply the browser instructions, the expected behavior, the exact visible text to observe, and an ordered `actionContract`. Schema version `2` supports named button clicks with an HTML ID and accessible name, followed by an optional same-page reload. Use the literal placeholder `${appUrl}` when an instruction needs to reopen the tested URL. Extra, missing, wrong-target or unconfirmed actions leave the result incomplete. The original `cases/cart-v1.json` is retained for historical comparison. Use test accounts or synthetic data suitable for Kane’s evidence capture.
-
-A conclusive result requires a compatible Kane exit and assertion outcome, a usable upload, a validated evidence pack, and matching browser action and field records. Authentication, infrastructure, upload and missing execution evidence can all produce an incomplete result. FixProof preserves every run and applies zero automatic edits. The documented correction used one candidate edit after the reproduced failure.
-
-## Review materials
-
-- [Final recording walkthrough](publication/RECORDING.md) and [cart control demonstration reports](evidence/control-regression/README.md).
-
-- [Actual before/after evidence](VERIFICATION.md)
-- [Repair brief and demonstrated handoff](evidence/repair-brief/README.md)
-- [Meta and Baseten contribution and usage](evidence/providers/README.md)
-- [Submission fields](publication/SUBMISSION.md) and [two post drafts](publication/POSTS.md)
+Case schema version 2 supports ordered button clicks with an HTML ID and accessible name, followed by an optional same-page reload. Use the literal placeholder `${appUrl}` for the tested URL. Missing or unconfirmed actions leave a check incomplete. The [earlier verification](VERIFICATION.md) shows why action order matters and documents the original baseline and historical case.

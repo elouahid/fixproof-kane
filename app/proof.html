@@ -1,40 +1,87 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-entry="report">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FixProof · Comparison</title>
-  <link rel="stylesheet" href="/proof.css">
-  <script src="/proof.js" defer></script>
+  <title>FixProof · Recorded comparison</title>
+  <link rel="stylesheet" href="proof.css">
+  <script src="proof.js" defer></script>
 </head>
 <body>
-  <main>
-    <header>
-      <a class="brand" href="/">FixProof</a>
-      <nav aria-label="Example resources">
-        <a id="example-link" href="/example/" hidden>Recorded example</a>
-        <a href="/baseline/">Baseline cart</a>
-        <a href="/candidate/">Candidate cart</a>
+  <a class="skip-link" href="#case-title">Skip to comparison</a>
+  <header class="masthead">
+    <div class="wrap masthead-inner">
+      <a class="brand" id="home-link" href="./">FixProof</a>
+      <nav class="reference-links" aria-label="Project resources">
+        <a href="https://youtu.be/SW1Dju1sNsQ">Watch walkthrough</a>
+        <a href="https://github.com/elouahid/fixproof-kane">GitHub</a>
       </nav>
-    </header>
+    </div>
+  </header>
 
-    <p id="loading" class="notice" role="status">Loading comparison…</p>
+  <main class="wrap">
+    <nav class="run-nav" aria-label="Recorded comparisons">
+      <span>Recorded comparisons</span>
+      <div class="run-links">
+        <a id="flawed-link" href="?run=flawed">Flawed correction</a>
+        <a id="reviewed-link" href="?run=reviewed">Reviewed correction</a>
+      </div>
+    </nav>
 
+    <p id="loading" role="status">Loading recorded evidence…</p>
     <div id="comparison" hidden>
       <section class="intro" aria-labelledby="case-title">
-        <p class="source-label" id="source-label"></p>
-        <h1 id="case-title"></h1>
-        <dl class="run-metadata">
-          <div><dt>Run ID</dt><dd><code id="run-id"></code></dd></div>
-          <div><dt id="date-label">Run date</dt><dd id="run-date"></dd></div>
-        </dl>
+        <p id="source-label" class="source-label"></p>
+        <h1 id="case-title" tabindex="-1"></h1>
+        <p id="explanation" class="explanation"></p>
+        <div class="exit-row">
+          <strong id="exit-badge"></strong>
+          <p id="exit-source"></p>
+        </div>
       </section>
-      <div id="checks"></div>
-      <section class="checks" id="incomplete-example" aria-labelledby="incomplete-title" hidden>
-        <h2 id="incomplete-title">Incomplete execution example</h2>
-        <p id="incomplete-reason"></p>
+
+      <section aria-labelledby="results-title">
+        <h2 id="results-title">Recorded check results</h2>
+        <table aria-labelledby="results-title">
+          <thead><tr><th scope="col">Check</th><th scope="col">Baseline</th><th scope="col">Candidate</th></tr></thead>
+          <tbody id="results"></tbody>
+        </table>
+      </section>
+
+      <section class="evidence-section" aria-labelledby="evidence-title">
+        <h2 id="evidence-title">Inspect this run</h2>
+        <dl class="run-meta">
+          <div><dt>Recorded case</dt><dd id="case-name"></dd></div>
+          <div><dt>Run ID</dt><dd><code id="run-id"></code></dd></div>
+          <div><dt id="date-label">Recorded</dt><dd id="run-date"></dd></div>
+        </dl>
+        <details id="capture" hidden>
+          <summary>Comparison exit provenance</summary>
+          <p id="capture-note"></p>
+          <p class="hash-label">Process capture SHA-256</p>
+          <code id="capture-hash" class="digest"></code>
+          <p id="recorded-sources" hidden>
+            <a id="saved-report-link">Saved report on GitHub</a>
+            · <a id="manifest-link" href="https://github.com/elouahid/fixproof-kane/blob/56409e049b64a15797b3a6fd39b4f2c08f0c295c/evidence/control-regression/manifest.json">Run manifest</a>
+          </p>
+        </details>
+        <div id="checks"></div>
+        <section class="extra" id="incomplete-example" aria-labelledby="incomplete-title" hidden>
+          <h3 id="incomplete-title">Earlier incomplete execution</h3>
+          <p id="incomplete-reason"></p>
+        </section>
       </section>
     </div>
+
+    <aside id="local-resources" hidden>
+      <h2>Current checkout</h2>
+      <p>These carts run the code in this checkout. The saved comparisons above describe the builds tested at the time.</p>
+      <nav class="local-links" aria-label="Current cart applications">
+        <a id="baseline-link">Open current baseline cart</a>
+        <a id="candidate-link">Open current candidate cart (reviewed source in the demo)</a>
+      </nav>
+      <a id="example-link">View the earlier recorded example</a>
+    </aside>
   </main>
 </body>
 </html>

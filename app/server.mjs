@@ -1,7 +1,8 @@
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
-import { exampleImageNames, exampleView, reportView } from './report-view.mjs';
+import { exampleImageNames, exampleView } from './report-view.mjs';
+import { loadRecordedDemo } from './recorded-demo.mjs';
 
 const host = '127.0.0.1';
 const port = Number(process.env.FIXPROOF_CART_PORT ?? 8741);
@@ -16,15 +17,16 @@ async function readJson(path) {
 }
 
 const evidenceDirectory = new URL('../evidence/', import.meta.url);
-const [recorded, unavailable] = await Promise.all([
+const [recorded, unavailable, demo] = await Promise.all([
   readJson(new URL('comparison.json', evidenceDirectory)),
   readJson(new URL('incomplete.json', evidenceDirectory)),
+  loadRecordedDemo(),
 ]);
 const example = exampleView(recorded, unavailable);
 let selected;
 if (reportPath) {
   try {
-    selected = reportView(await readJson(reportPath));
+    selected = await demo.projectReport(await readFile(reportPath));
   } catch (error) {
     const reason = error instanceof SyntaxError ? 'Invalid JSON.' : error.code ?? error.message;
     console.error(`Could not open the selected FixProof report. ${reason}`);
@@ -59,11 +61,20 @@ await Promise.all(previewFiles.map(async ([route, filename, type]) => {
   const body = await readFile(new URL(`./${filename}`, import.meta.url), 'utf8');
   resources.set(route, { body, type: `${type}; charset=utf-8` });
 }));
-resources.set('/example/', resources.get('/'));
+const preview = resources.get('/');
+resources.set('/example/', { ...preview, body: preview.body.replace('data-entry="report"', 'data-entry="example"') });
+resources.set('/example/proof.css', resources.get('/proof.css'));
+resources.set('/example/proof.js', resources.get('/proof.js'));
 
-const jsonResource = (value) => ({ body: JSON.stringify(value), type: 'application/json; charset=utf-8' });
-resources.set('/proof/report.json', jsonResource(selected ?? example));
+const jsonResource = (view) => ({ body: JSON.stringify({ ...view, currentCarts: true }), type: 'application/json; charset=utf-8' });
+resources.set('/proof/report.json', jsonResource(selected ?? demo.reports.flawed));
 resources.set('/proof/example.json', jsonResource(example));
+for (const [name, view] of Object.entries(demo.reports)) {
+  resources.set(`/proof/${name}.json`, jsonResource(view));
+}
+for (const [path, body] of demo.images) {
+  resources.set(`/proof/${path}`, { body, type: 'image/jpeg' });
+}
 
 for (const name of exampleImageNames) {
   const path = `browser/${name}`;
