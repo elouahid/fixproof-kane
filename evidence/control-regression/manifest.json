@@ -301,7 +301,7 @@
     "originalRecordSha256": "6ba377abd22f207bb1b647b18c61f9a567af1334eea12270204baafcf2c0c783",
     "originalRecordedAt": "2026-11-17T21:05:50.654673+00:00",
     "postFinalRunVerifiedAt": "2026-11-17T21:17:24.348340+00:00",
-    "note": "The retained restore receipt predates the final run. This independent byte comparison occurred after final completion.",
+    "note": "The retained restore receipt was recorded after the final run started and before it completed. This independent byte comparison occurred after final completion.",
     "candidateSha256": "f467396af5c96c8aec0c8893dbfe89000fd0656430110f0bd781bb42444f10fc",
     "caseSha256": "b537838948f879df662a6ff8df54e2b464a07c3c7f7d5a032c2fa77e5516b5f6",
     "reviewedCandidateRestored": true,
