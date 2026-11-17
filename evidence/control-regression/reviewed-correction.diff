@@ -1,0 +1,5 @@
+--- a/app/candidate.js
++++ b/app/candidate.js
+@@ -28 +28 @@
+-  // Deliberately flawed demo correction: persist the adjustment but omit its immediate redraw.
++  render();

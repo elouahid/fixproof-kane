@@ -70,6 +70,8 @@ A conclusive result requires a compatible Kane exit and assertion outcome, a usa
 
 ## Review materials
 
+- [Final recording walkthrough](publication/RECORDING.md) and [cart control demonstration reports](evidence/control-regression/README.md).
+
 - [Actual before/after evidence](VERIFICATION.md)
 - [Repair brief and demonstrated handoff](evidence/repair-brief/README.md)
 - [Meta and Baseten contribution and usage](evidence/providers/README.md)

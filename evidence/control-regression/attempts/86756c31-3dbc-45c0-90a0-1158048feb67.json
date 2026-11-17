@@ -1,0 +1,180 @@
+{
+  "id": "86756c31-3dbc-45c0-90a0-1158048feb67",
+  "title": "Cart quantity and total after refresh",
+  "schemaVersion": 2,
+  "caseSchemaVersion": 2,
+  "startedAt": "2026-11-17T20:49:16.500Z",
+  "finishedAt": "2026-11-17T20:52:36.641Z",
+  "specSha256": "b537838948f879df662a6ff8df54e2b464a07c3c7f7d5a032c2fa77e5516b5f6",
+  "phase": "reviewed",
+  "comparisonExitCode": 2,
+  "comparisonExitProvenance": "Actual subprocess exit captured by the operator wrapper; separately checked against recorded outcomes.",
+  "executionCaptureSha256": "dc057c9827e56129a3882c5214e8a764c56ef7d0deef2bc7759d7fb3b496b68f",
+  "originalReportSha256": "3a1c9525626082eb8f983d66055e6b722a456dc7e0d76857419568bbbb5989d0",
+  "targets": {
+    "baseline": {
+      "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea"
+    },
+    "candidate": {
+      "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a"
+    }
+  },
+  "candidateSource": {
+    "files": [
+      {
+        "path": "app/candidate.js",
+        "sha256": "f467396af5c96c8aec0c8893dbfe89000fd0656430110f0bd781bb42444f10fc"
+      }
+    ],
+    "stable": true
+  },
+  "provenance": "Allowlisted public summary of an actual saved Kane comparison; raw sealed packs remain private. Local L1 validation, ordered actions, observed fields, assertions and served build headers were checked independently. The flawed source was deliberately constructed for this demonstration, not a provider proposal.",
+  "checks": [
+    {
+      "id": "refresh",
+      "expected": "After the reload, Quantity is 2 and Cart total is $48.00.",
+      "outcome": "incomplete",
+      "objectiveSha256": "533fded8d728325aa7313ade96a92f13059dda6bc094ea557422b97c2b51052b",
+      "observationLabels": {
+        "fp_count_readout": "Quantity",
+        "fp_total_readout": "Cart total"
+      },
+      "baseline": {
+        "verdict": "fail",
+        "category": "application",
+        "exitCode": 1,
+        "kaneCode": 740,
+        "kaneCredits": 22.336613999999997,
+        "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea",
+        "observations": {
+          "fp_count_readout": "1",
+          "fp_total_readout": "$24.00"
+        },
+        "recordedActionTypes": [
+          "navigate",
+          "click",
+          "click",
+          "navigate",
+          "wait",
+          "analyze",
+          "analyze",
+          "analyze",
+          "analyze",
+          "assert"
+        ],
+        "documentResponses": [
+          {
+            "status": 200,
+            "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea"
+          },
+          {
+            "status": 200,
+            "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea"
+          }
+        ],
+        "procedure": [
+          {
+            "type": "click",
+            "step": 2,
+            "target": "Reset cart",
+            "selector": "internal:role=button[name=\"Reset cart\"i]"
+          },
+          {
+            "type": "click",
+            "step": 3,
+            "target": "Increase quantity",
+            "selector": "internal:role=button[name=\"Increase quantity\"i]"
+          },
+          {
+            "type": "reload",
+            "step": 4
+          }
+        ],
+        "screenshot": {
+          "path": "attempts/86756c31-3dbc-45c0-90a0-1158048feb67/baseline-refresh.jpg",
+          "step": "7-0-7",
+          "sha256": "d2df421dd08ab343d9b6bb0f088945bcd97f8d917924df4d217d2a1a9648ea8a"
+        },
+        "evidence": {
+          "kaneRunId": "c779d77a-d0be-4a8c-9fb1-eaafbafecb47",
+          "sha256": "d38a9a676efe4a37a4fd781daa7167e93e1d45403b6f63be47466b2a62e0363b",
+          "validation": "Kane L1 valid",
+          "localValidation": {
+            "valid": true,
+            "status": "finalized",
+            "exitCode": 0
+          }
+        }
+      },
+      "candidate": {
+        "verdict": "incomplete",
+        "category": "infrastructure",
+        "exitCode": 2,
+        "kaneCode": null,
+        "kaneCredits": null,
+        "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+        "observations": {},
+        "reason": "Kane could not start or continue the browser run."
+      }
+    },
+    {
+      "id": "live-total",
+      "expected": "Immediately after increasing, Quantity is 2 and Cart total is $48.00.",
+      "outcome": "incomplete",
+      "objectiveSha256": "078e8bf1815924466649ab0ac4d9422248ce983ef981496c10c755231f16652f",
+      "observationLabels": {
+        "fp_count_readout": "Quantity",
+        "fp_total_readout": "Cart total"
+      },
+      "baseline": {
+        "verdict": "incomplete",
+        "category": "upload",
+        "exitCode": 0,
+        "kaneCode": 100,
+        "kaneCredits": 14.6336675,
+        "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea",
+        "observations": {
+          "fp_count_readout": "2",
+          "fp_total_readout": "$48.00"
+        },
+        "reason": "Kane reported an upload failure.",
+        "recordedActionTypes": [
+          "navigate",
+          "click",
+          "click",
+          "analyze",
+          "analyze",
+          "analyze",
+          "analyze",
+          "assert"
+        ],
+        "documentResponses": [
+          {
+            "status": 200,
+            "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea"
+          }
+        ],
+        "evidence": {
+          "kaneRunId": "5aa1a4bb-9a29-4404-874e-f83a745dbca9",
+          "sha256": "18c8e9564a82bd1ec770cfad8ade17aba567124bc4b2d6536a969419f572580f",
+          "validation": "Kane L1 valid",
+          "localValidation": {
+            "valid": true,
+            "status": "finalized",
+            "exitCode": 0
+          }
+        }
+      },
+      "candidate": {
+        "verdict": "incomplete",
+        "category": "infrastructure",
+        "exitCode": 2,
+        "kaneCode": null,
+        "kaneCredits": null,
+        "version": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+        "observations": {},
+        "reason": "Kane could not start or continue the browser run."
+      }
+    }
+  ]
+}

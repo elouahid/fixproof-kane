@@ -1,0 +1,530 @@
+{
+  "schemaVersion": 1,
+  "title": "Control regression demonstration: unchanged Kane comparisons",
+  "auditCompletedAt": "2026-11-17T21:17:24.346814+00:00",
+  "acceptedCommit": "9dc497c38a070fdb90536cccb2367dc94975ab6c",
+  "scope": "Synthetic local cart; no new provider patch request. Deliberately flawed source authored by Codex; operator restored the previously reviewed accepted source. FixProof applies no automatic edits.",
+  "freeze": {
+    "recordedAt": "2026-11-17T20:20:25.552975+00:00",
+    "originalRecordSha256": "2919b15cbe2a128f5483c02295a04340cd4d47516fe4e729157a4fc4fb2f07f5",
+    "caseFile": "cases/cart.json",
+    "caseSha256": "b537838948f879df662a6ff8df54e2b464a07c3c7f7d5a032c2fa77e5516b5f6",
+    "baselineBuild": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea",
+    "flawedBuild": "af4300b0c08022c4d8d75b30c8ee6aa69c2d143dd68cbeb1eb0a61cb085ea5a4",
+    "reviewedBuild": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+    "flawedSourceSha256": "9046cf71cbb45c95c99a66bb779ff9cf7965ad61b7e2e9363a042fb8f6bc1e28",
+    "reviewedSourceSha256": "f467396af5c96c8aec0c8893dbfe89000fd0656430110f0bd781bb42444f10fc"
+  },
+  "selectedReports": {
+    "flawed": {
+      "path": "flawed.json",
+      "id": "4c562a74-0669-4e0d-a4ad-e2eb73693f8a",
+      "sha256": "7894124c3a292911a095428c2e2d3df29f63cda311883aa649fe774f62af3ff7",
+      "comparisonExitCode": 1
+    },
+    "reviewed": {
+      "path": "reviewed.json",
+      "id": "0a44432b-c0fd-4179-a377-a2f3ee894d47",
+      "sha256": "498c84daeadaa3760a9f7f0268ae2c71cafa1cbc1b072093fd2aca53eb4c5491",
+      "comparisonExitCode": 0
+    }
+  },
+  "commands": {
+    "workingDirectory": "The isolated demonstration project root; personal absolute path omitted.",
+    "comparison": "node compare.mjs cases/cart.json --candidate-source app/candidate.js",
+    "repairBrief": "node repair-brief.mjs --report .fixproof/runs/4c562a74-0669-4e0d-a4ad-e2eb73693f8a/report.json --case cases/cart.json --source app/candidate.js",
+    "localPackValidation": "kane evidence validate <private saved pack> --json",
+    "flawedPreview": {
+      "command": "node app/server.mjs --report 'evidence/control-regression/flawed.json'",
+      "FIXPROOF_CART_PORT": "8742",
+      "url": "http://127.0.0.1:8742/"
+    },
+    "reviewedPreview": {
+      "command": "node app/server.mjs --report 'evidence/control-regression/reviewed.json'",
+      "FIXPROOF_CART_PORT": "8743",
+      "url": "http://127.0.0.1:8743/"
+    }
+  },
+  "attempts": [
+    {
+      "label": "flawed",
+      "id": "86ed19bd-40f1-4501-8b1d-cd10250b4b92",
+      "phase": "flawed",
+      "startedAt": "2026-11-17T20:20:26.650Z",
+      "finishedAt": "2026-11-17T20:30:20.148Z",
+      "capturedComparisonExitCode": 2,
+      "summary": "attempts/86ed19bd-40f1-4501-8b1d-cd10250b4b92.json",
+      "summarySha256": "727b0607ef54cb6afd7814614a3ddcae1be1015bc1592f5ebdfe14474b2c631d",
+      "originalReportSha256": "fe79e5fe925e5cb2f7d4b52eadd64b024b4a171d1bf14aef50983b8624bd5681",
+      "executionCaptureSha256": "04f726e7eee9a64cf77154cd4cca88f0a013860b07f9fcaf4b8dea4b47cdf37c",
+      "candidateBuild": "af4300b0c08022c4d8d75b30c8ee6aa69c2d143dd68cbeb1eb0a61cb085ea5a4",
+      "selectedSource": {
+        "files": [
+          {
+            "path": "app/candidate.js",
+            "sha256": "9046cf71cbb45c95c99a66bb779ff9cf7965ad61b7e2e9363a042fb8f6bc1e28"
+          }
+        ],
+        "stable": true
+      },
+      "checks": [
+        {
+          "id": "refresh",
+          "objectiveSha256": "533fded8d728325aa7313ade96a92f13059dda6bc094ea557422b97c2b51052b",
+          "outcome": "corrected",
+          "baseline": "fail",
+          "candidate": "pass"
+        },
+        {
+          "id": "live-total",
+          "objectiveSha256": "078e8bf1815924466649ab0ac4d9422248ce983ef981496c10c755231f16652f",
+          "outcome": "incomplete",
+          "baseline": "pass",
+          "candidate": "incomplete"
+        }
+      ]
+    },
+    {
+      "label": "reviewed",
+      "id": "2d129aa4-d34f-45f3-9505-847afa518439",
+      "phase": "reviewed",
+      "startedAt": "2026-11-17T20:30:21.561Z",
+      "finishedAt": "2026-11-17T20:37:07.208Z",
+      "capturedComparisonExitCode": 2,
+      "summary": "attempts/2d129aa4-d34f-45f3-9505-847afa518439.json",
+      "summarySha256": "17629cb0ac501c01fdf3d2c78e2e218ec08e9d59b63ed67d1b095aac73f26075",
+      "originalReportSha256": "b21f6c090594c3c7994762535209fcd5265b0e576c082864560560c0f31a6a8c",
+      "executionCaptureSha256": "f415171b164f90071c59de9cae85f27ace52525fd3a088b361ba2f793ae1fa8f",
+      "candidateBuild": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+      "selectedSource": {
+        "files": [
+          {
+            "path": "app/candidate.js",
+            "sha256": "f467396af5c96c8aec0c8893dbfe89000fd0656430110f0bd781bb42444f10fc"
+          }
+        ],
+        "stable": true
+      },
+      "checks": [
+        {
+          "id": "refresh",
+          "objectiveSha256": "533fded8d728325aa7313ade96a92f13059dda6bc094ea557422b97c2b51052b",
+          "outcome": "incomplete",
+          "baseline": "fail",
+          "candidate": "incomplete"
+        },
+        {
+          "id": "live-total",
+          "objectiveSha256": "078e8bf1815924466649ab0ac4d9422248ce983ef981496c10c755231f16652f",
+          "outcome": "passed in both versions",
+          "baseline": "pass",
+          "candidate": "pass"
+        }
+      ]
+    },
+    {
+      "label": "flawed-repeat",
+      "id": "4c562a74-0669-4e0d-a4ad-e2eb73693f8a",
+      "phase": "flawed",
+      "startedAt": "2026-11-17T20:37:12.390Z",
+      "finishedAt": "2026-11-17T20:43:28.314Z",
+      "capturedComparisonExitCode": 1,
+      "summary": "attempts/4c562a74-0669-4e0d-a4ad-e2eb73693f8a.json",
+      "summarySha256": "7894124c3a292911a095428c2e2d3df29f63cda311883aa649fe774f62af3ff7",
+      "originalReportSha256": "575c380bc3600d6282e14f3f2e0797337572772859204e33311c83200b01a62a",
+      "executionCaptureSha256": "9b9902a04570d8cad46131f97c25e38a211c7897897c1acdb5bdf1896d367681",
+      "candidateBuild": "af4300b0c08022c4d8d75b30c8ee6aa69c2d143dd68cbeb1eb0a61cb085ea5a4",
+      "selectedSource": {
+        "files": [
+          {
+            "path": "app/candidate.js",
+            "sha256": "9046cf71cbb45c95c99a66bb779ff9cf7965ad61b7e2e9363a042fb8f6bc1e28"
+          }
+        ],
+        "stable": true
+      },
+      "checks": [
+        {
+          "id": "refresh",
+          "objectiveSha256": "533fded8d728325aa7313ade96a92f13059dda6bc094ea557422b97c2b51052b",
+          "outcome": "corrected",
+          "baseline": "fail",
+          "candidate": "pass"
+        },
+        {
+          "id": "live-total",
+          "objectiveSha256": "078e8bf1815924466649ab0ac4d9422248ce983ef981496c10c755231f16652f",
+          "outcome": "regressed",
+          "baseline": "pass",
+          "candidate": "fail"
+        }
+      ]
+    },
+    {
+      "label": "reviewed-after-rejection",
+      "id": "191b6e17-b448-4090-b0f5-e4ffecc6199e",
+      "phase": "reviewed",
+      "startedAt": "2026-11-17T20:43:29.468Z",
+      "finishedAt": "2026-11-17T20:49:10.700Z",
+      "capturedComparisonExitCode": 2,
+      "summary": "attempts/191b6e17-b448-4090-b0f5-e4ffecc6199e.json",
+      "summarySha256": "42736a95d09455d87ac801ead119e7570789d7e167a1babfe9121bffa06602bc",
+      "originalReportSha256": "8bba0702c49639f741cbeef8c25c2494765e20b11937e1b437ef40a2cf5b9eb1",
+      "executionCaptureSha256": "90d117272c254397fe66299d4bbb4a8ba231d55bf5e541c87de60fed72e8d4a6",
+      "candidateBuild": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+      "selectedSource": {
+        "files": [
+          {
+            "path": "app/candidate.js",
+            "sha256": "f467396af5c96c8aec0c8893dbfe89000fd0656430110f0bd781bb42444f10fc"
+          }
+        ],
+        "stable": true
+      },
+      "checks": [
+        {
+          "id": "refresh",
+          "objectiveSha256": "533fded8d728325aa7313ade96a92f13059dda6bc094ea557422b97c2b51052b",
+          "outcome": "incomplete",
+          "baseline": "incomplete",
+          "candidate": "pass"
+        },
+        {
+          "id": "live-total",
+          "objectiveSha256": "078e8bf1815924466649ab0ac4d9422248ce983ef981496c10c755231f16652f",
+          "outcome": "passed in both versions",
+          "baseline": "pass",
+          "candidate": "pass"
+        }
+      ]
+    },
+    {
+      "label": "reviewed-confirmation",
+      "id": "86756c31-3dbc-45c0-90a0-1158048feb67",
+      "phase": "reviewed",
+      "startedAt": "2026-11-17T20:49:16.500Z",
+      "finishedAt": "2026-11-17T20:52:36.641Z",
+      "capturedComparisonExitCode": 2,
+      "summary": "attempts/86756c31-3dbc-45c0-90a0-1158048feb67.json",
+      "summarySha256": "3d84fdbd652e7e408dcc2bf9b67208031fcf52815512c07b0563587ac0137073",
+      "originalReportSha256": "3a1c9525626082eb8f983d66055e6b722a456dc7e0d76857419568bbbb5989d0",
+      "executionCaptureSha256": "dc057c9827e56129a3882c5214e8a764c56ef7d0deef2bc7759d7fb3b496b68f",
+      "candidateBuild": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+      "selectedSource": {
+        "files": [
+          {
+            "path": "app/candidate.js",
+            "sha256": "f467396af5c96c8aec0c8893dbfe89000fd0656430110f0bd781bb42444f10fc"
+          }
+        ],
+        "stable": true
+      },
+      "checks": [
+        {
+          "id": "refresh",
+          "objectiveSha256": "533fded8d728325aa7313ade96a92f13059dda6bc094ea557422b97c2b51052b",
+          "outcome": "incomplete",
+          "baseline": "fail",
+          "candidate": "incomplete"
+        },
+        {
+          "id": "live-total",
+          "objectiveSha256": "078e8bf1815924466649ab0ac4d9422248ce983ef981496c10c755231f16652f",
+          "outcome": "incomplete",
+          "baseline": "incomplete",
+          "candidate": "incomplete"
+        }
+      ]
+    },
+    {
+      "label": "reviewed-final",
+      "id": "0a44432b-c0fd-4179-a377-a2f3ee894d47",
+      "phase": "reviewed",
+      "startedAt": "2026-11-17T21:05:18.985Z",
+      "finishedAt": "2026-11-17T21:12:49.193Z",
+      "capturedComparisonExitCode": 0,
+      "summary": "attempts/0a44432b-c0fd-4179-a377-a2f3ee894d47.json",
+      "summarySha256": "498c84daeadaa3760a9f7f0268ae2c71cafa1cbc1b072093fd2aca53eb4c5491",
+      "originalReportSha256": "aeed8578af009cb2fdcf38a6c45e68390c4ddc6af8c608222cde06035a1086ce",
+      "executionCaptureSha256": "ce3b94122d0aed0f0ad8d1890e61f6ed9234ab4e9c0bc7ad1a55ca40e6d7f977",
+      "candidateBuild": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+      "selectedSource": {
+        "files": [
+          {
+            "path": "app/candidate.js",
+            "sha256": "f467396af5c96c8aec0c8893dbfe89000fd0656430110f0bd781bb42444f10fc"
+          }
+        ],
+        "stable": true
+      },
+      "checks": [
+        {
+          "id": "refresh",
+          "objectiveSha256": "533fded8d728325aa7313ade96a92f13059dda6bc094ea557422b97c2b51052b",
+          "outcome": "corrected",
+          "baseline": "fail",
+          "candidate": "pass"
+        },
+        {
+          "id": "live-total",
+          "objectiveSha256": "078e8bf1815924466649ab0ac4d9422248ce983ef981496c10c755231f16652f",
+          "outcome": "passed in both versions",
+          "baseline": "pass",
+          "candidate": "pass"
+        }
+      ]
+    }
+  ],
+  "audit": {
+    "attempts": 6,
+    "sideChecks": 24,
+    "conclusiveSideChecks": 18,
+    "incompleteSideChecks": 6,
+    "availablePacksValidatedLocally": 22,
+    "absentPacks": 2,
+    "unchangedCaseAndObjectiveHashes": true,
+    "sourceSnapshotsStableInEveryReport": true,
+    "capturedComparisonExitsMatchSavedOutcomes": true,
+    "conclusiveEvidenceChecks": [
+      "pack SHA-256 and local Kane L1 finalized status",
+      "Kane result code and upload status",
+      "exact ordered successful DOM actions and selector/step binding",
+      "same-URL document GET/HTTP200/build identity: two for reload, one for control",
+      "named field observations bound to terminal assertions",
+      "served-build fingerprints independently recomputed from frozen HTML/CSS/JavaScript"
+    ],
+    "incompleteEvidencePolicy": "Preserve original categories/reasons, missing observations and absent packs. Validating an incomplete pack does not upgrade the verdict.",
+    "screenshotPolicy": "Unchanged sealed synthetic-cart JPEGs for conclusive side checks only; all six unique image hashes visually inspected.",
+    "reportedCreditsPolicy": "Per-side kaneCredits are retained as CLI-reported values; no independent billing claim."
+  },
+  "restoration": {
+    "originalRecordSha256": "6ba377abd22f207bb1b647b18c61f9a567af1334eea12270204baafcf2c0c783",
+    "originalRecordedAt": "2026-11-17T21:05:50.654673+00:00",
+    "postFinalRunVerifiedAt": "2026-11-17T21:17:24.348340+00:00",
+    "note": "The retained restore receipt predates the final run. This independent byte comparison occurred after final completion.",
+    "candidateSha256": "f467396af5c96c8aec0c8893dbfe89000fd0656430110f0bd781bb42444f10fc",
+    "caseSha256": "b537838948f879df662a6ff8df54e2b464a07c3c7f7d5a032c2fa77e5516b5f6",
+    "reviewedCandidateRestored": true,
+    "acceptedSourceAndCaseUnchanged": true,
+    "verifiedFiles": [
+      {
+        "path": "app/candidate.js",
+        "sha256": "f467396af5c96c8aec0c8893dbfe89000fd0656430110f0bd781bb42444f10fc",
+        "projectMatchesAcceptedCommit": true,
+        "isolatedCopyMatchesAcceptedCommit": true
+      },
+      {
+        "path": "cases/cart.json",
+        "sha256": "b537838948f879df662a6ff8df54e2b464a07c3c7f7d5a032c2fa77e5516b5f6",
+        "projectMatchesAcceptedCommit": true,
+        "isolatedCopyMatchesAcceptedCommit": true
+      },
+      {
+        "path": "app/baseline.js",
+        "sha256": "4bdd004a636d0d5e7c88b3443c249017a2eca2aa77425464fe6f857e2a08e3f9",
+        "projectMatchesAcceptedCommit": true,
+        "isolatedCopyMatchesAcceptedCommit": true
+      },
+      {
+        "path": "app/server.mjs",
+        "sha256": "706808950876019a300dc5ba9ba3b9eeeac3eb16da1322f314e20f6c6f2d46ec",
+        "projectMatchesAcceptedCommit": true,
+        "isolatedCopyMatchesAcceptedCommit": true
+      },
+      {
+        "path": "app/report-view.mjs",
+        "sha256": "42aaa435a4468c2e1c60d0b004d7b17c1c3734dbd3534c58ccb2e5d0caa3fb5a",
+        "projectMatchesAcceptedCommit": true,
+        "isolatedCopyMatchesAcceptedCommit": true
+      },
+      {
+        "path": "cases/kane-context.md",
+        "sha256": "ac2c2442f358ecca00e626edf74db8876ebb90ecb11f943a62b7ea0fecda2eaf",
+        "projectMatchesAcceptedCommit": true,
+        "isolatedCopyMatchesAcceptedCommit": true
+      },
+      {
+        "path": "lib/objective.mjs",
+        "sha256": "04d21d71f1dbb26fe645558ce93541b4cdfe43d60340cb4aa293feb0bb305284",
+        "projectMatchesAcceptedCommit": true,
+        "isolatedCopyMatchesAcceptedCommit": true
+      },
+      {
+        "path": "lib/result.mjs",
+        "sha256": "bc32ebcdf558687c83fe9f26e44689e996c043064b5b14c6018776a629321f2e",
+        "projectMatchesAcceptedCommit": true,
+        "isolatedCopyMatchesAcceptedCommit": true
+      },
+      {
+        "path": "lib/procedure.mjs",
+        "sha256": "14e4bfd45c922d57a7476f41ce462a6ceb01aa1fea46dbaac75584bce706bcdf",
+        "projectMatchesAcceptedCommit": true,
+        "isolatedCopyMatchesAcceptedCommit": true
+      },
+      {
+        "path": "lib/assertions.mjs",
+        "sha256": "441d4c2cd6b98a1ff04e5bdae32aa1176fc4989713e272d09a8a24afc94c5ad1",
+        "projectMatchesAcceptedCommit": true,
+        "isolatedCopyMatchesAcceptedCommit": true
+      },
+      {
+        "path": "lib/kane.mjs",
+        "sha256": "9b40fbfc6925e082f308ab4eec642bf7c7266b8cb53accad3b1e72aaf85cd7ab",
+        "projectMatchesAcceptedCommit": true,
+        "isolatedCopyMatchesAcceptedCommit": true
+      },
+      {
+        "path": "compare.mjs",
+        "sha256": "60a09f5679f0b44494c301ed4df02541c232918bc4421eefbce86e2eaea19a7d",
+        "projectMatchesAcceptedCommit": true,
+        "isolatedCopyMatchesAcceptedCommit": true
+      },
+      {
+        "path": "repair-brief.mjs",
+        "sha256": "6171872ead6a9d795af7e1dc16d64d2d6d0d9becbab5b41120877a812cc4cb35",
+        "projectMatchesAcceptedCommit": true,
+        "isolatedCopyMatchesAcceptedCommit": true
+      }
+    ]
+  },
+  "publication": {
+    "reports": "Allowlisted derived summaries; originalReportSha256 and pack hashes identify private originals, not these rewritten summaries.",
+    "excluded": [
+      "raw sealed packs",
+      "raw runner/account/upload metadata",
+      "credentials",
+      "personal host paths"
+    ],
+    "historicalEvidenceUnchanged": true
+  },
+  "artifacts": {
+    "attempts/0a44432b-c0fd-4179-a377-a2f3ee894d47/baseline-live-total.jpg": {
+      "sha256": "ec4b44c62e2767622c4ac44f175105174f8f537ac3d4b23707a71e78168d9b77",
+      "bytes": 31501
+    },
+    "attempts/0a44432b-c0fd-4179-a377-a2f3ee894d47/baseline-refresh.jpg": {
+      "sha256": "d2df421dd08ab343d9b6bb0f088945bcd97f8d917924df4d217d2a1a9648ea8a",
+      "bytes": 31309
+    },
+    "attempts/0a44432b-c0fd-4179-a377-a2f3ee894d47/candidate-live-total.jpg": {
+      "sha256": "5f9eb6664c835905b965331572c438cd22f1ca9bef3aae1c74e71409181c1280",
+      "bytes": 31570
+    },
+    "attempts/0a44432b-c0fd-4179-a377-a2f3ee894d47/candidate-refresh.jpg": {
+      "sha256": "14557bc82a2b243810373da2426b6d739df1305821097e50eb176db9f7129e51",
+      "bytes": 31555
+    },
+    "attempts/0a44432b-c0fd-4179-a377-a2f3ee894d47.json": {
+      "sha256": "498c84daeadaa3760a9f7f0268ae2c71cafa1cbc1b072093fd2aca53eb4c5491",
+      "bytes": 9824
+    },
+    "attempts/191b6e17-b448-4090-b0f5-e4ffecc6199e/baseline-live-total.jpg": {
+      "sha256": "ec4b44c62e2767622c4ac44f175105174f8f537ac3d4b23707a71e78168d9b77",
+      "bytes": 31501
+    },
+    "attempts/191b6e17-b448-4090-b0f5-e4ffecc6199e/candidate-live-total.jpg": {
+      "sha256": "5f9eb6664c835905b965331572c438cd22f1ca9bef3aae1c74e71409181c1280",
+      "bytes": 31570
+    },
+    "attempts/191b6e17-b448-4090-b0f5-e4ffecc6199e/candidate-refresh.jpg": {
+      "sha256": "14557bc82a2b243810373da2426b6d739df1305821097e50eb176db9f7129e51",
+      "bytes": 31555
+    },
+    "attempts/191b6e17-b448-4090-b0f5-e4ffecc6199e.json": {
+      "sha256": "42736a95d09455d87ac801ead119e7570789d7e167a1babfe9121bffa06602bc",
+      "bytes": 8807
+    },
+    "attempts/2d129aa4-d34f-45f3-9505-847afa518439/baseline-live-total.jpg": {
+      "sha256": "ec4b44c62e2767622c4ac44f175105174f8f537ac3d4b23707a71e78168d9b77",
+      "bytes": 31501
+    },
+    "attempts/2d129aa4-d34f-45f3-9505-847afa518439/baseline-refresh.jpg": {
+      "sha256": "d2df421dd08ab343d9b6bb0f088945bcd97f8d917924df4d217d2a1a9648ea8a",
+      "bytes": 31309
+    },
+    "attempts/2d129aa4-d34f-45f3-9505-847afa518439/candidate-live-total.jpg": {
+      "sha256": "5f9eb6664c835905b965331572c438cd22f1ca9bef3aae1c74e71409181c1280",
+      "bytes": 31570
+    },
+    "attempts/2d129aa4-d34f-45f3-9505-847afa518439.json": {
+      "sha256": "17629cb0ac501c01fdf3d2c78e2e218ec08e9d59b63ed67d1b095aac73f26075",
+      "bytes": 9124
+    },
+    "attempts/4c562a74-0669-4e0d-a4ad-e2eb73693f8a/baseline-live-total.jpg": {
+      "sha256": "ec4b44c62e2767622c4ac44f175105174f8f537ac3d4b23707a71e78168d9b77",
+      "bytes": 31501
+    },
+    "attempts/4c562a74-0669-4e0d-a4ad-e2eb73693f8a/baseline-refresh.jpg": {
+      "sha256": "d2df421dd08ab343d9b6bb0f088945bcd97f8d917924df4d217d2a1a9648ea8a",
+      "bytes": 31309
+    },
+    "attempts/4c562a74-0669-4e0d-a4ad-e2eb73693f8a/candidate-live-total.jpg": {
+      "sha256": "53668799ad78154e1d348007602622c0fb7b3546c6177048442693bc115aef9d",
+      "bytes": 31436
+    },
+    "attempts/4c562a74-0669-4e0d-a4ad-e2eb73693f8a/candidate-refresh.jpg": {
+      "sha256": "6780cbc71f39e5e3130ce2d46ab34815fc2233847a7d8e768eab6c4fcc0e3fa1",
+      "bytes": 31618
+    },
+    "attempts/4c562a74-0669-4e0d-a4ad-e2eb73693f8a.json": {
+      "sha256": "7894124c3a292911a095428c2e2d3df29f63cda311883aa649fe774f62af3ff7",
+      "bytes": 9808
+    },
+    "attempts/86756c31-3dbc-45c0-90a0-1158048feb67/baseline-refresh.jpg": {
+      "sha256": "d2df421dd08ab343d9b6bb0f088945bcd97f8d917924df4d217d2a1a9648ea8a",
+      "bytes": 31309
+    },
+    "attempts/86756c31-3dbc-45c0-90a0-1158048feb67.json": {
+      "sha256": "3d84fdbd652e7e408dcc2bf9b67208031fcf52815512c07b0563587ac0137073",
+      "bytes": 6151
+    },
+    "attempts/86ed19bd-40f1-4501-8b1d-cd10250b4b92/baseline-live-total.jpg": {
+      "sha256": "ec4b44c62e2767622c4ac44f175105174f8f537ac3d4b23707a71e78168d9b77",
+      "bytes": 31501
+    },
+    "attempts/86ed19bd-40f1-4501-8b1d-cd10250b4b92/baseline-refresh.jpg": {
+      "sha256": "d2df421dd08ab343d9b6bb0f088945bcd97f8d917924df4d217d2a1a9648ea8a",
+      "bytes": 31309
+    },
+    "attempts/86ed19bd-40f1-4501-8b1d-cd10250b4b92/candidate-refresh.jpg": {
+      "sha256": "6780cbc71f39e5e3130ce2d46ab34815fc2233847a7d8e768eab6c4fcc0e3fa1",
+      "bytes": 31618
+    },
+    "attempts/86ed19bd-40f1-4501-8b1d-cd10250b4b92.json": {
+      "sha256": "727b0607ef54cb6afd7814614a3ddcae1be1015bc1592f5ebdfe14474b2c631d",
+      "bytes": 9092
+    },
+    "case.json": {
+      "sha256": "b537838948f879df662a6ff8df54e2b464a07c3c7f7d5a032c2fa77e5516b5f6",
+      "bytes": 1814
+    },
+    "deliberately-flawed-candidate.js": {
+      "sha256": "9046cf71cbb45c95c99a66bb779ff9cf7965ad61b7e2e9363a042fb8f6bc1e28",
+      "bytes": 1447
+    },
+    "flawed.json": {
+      "sha256": "7894124c3a292911a095428c2e2d3df29f63cda311883aa649fe774f62af3ff7",
+      "bytes": 9808
+    },
+    "incomplete-repair-brief.md": {
+      "sha256": "19d9937199db1373d80dd4369b3cce1683c857ac18bbdd1a3a979766b6cde6ef",
+      "bytes": 2445
+    },
+    "README.md": {
+      "sha256": "480a57fdd230f4ee5a7bcaa98ae050be75d7256e9fc7d0707c65f2a9bee896e2",
+      "bytes": 7274
+    },
+    "repair-brief.md": {
+      "sha256": "82735946b555f2410236828b9507e379f18d8d18b4afecd06c164bc41525e728",
+      "bytes": 2314
+    },
+    "reviewed-correction.diff": {
+      "sha256": "01e2b262fc0c50cc1fa6df1684388b8701af17271d553335e6784d4ecd7c1d80",
+      "bytes": 170
+    },
+    "reviewed.json": {
+      "sha256": "498c84daeadaa3760a9f7f0268ae2c71cafa1cbc1b072093fd2aca53eb4c5491",
+      "bytes": 9824
+    }
+  }
+}

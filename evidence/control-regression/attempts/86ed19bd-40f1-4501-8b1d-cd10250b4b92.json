@@ -1,0 +1,276 @@
+{
+  "id": "86ed19bd-40f1-4501-8b1d-cd10250b4b92",
+  "title": "Cart quantity and total after refresh",
+  "schemaVersion": 2,
+  "caseSchemaVersion": 2,
+  "startedAt": "2026-11-17T20:20:26.650Z",
+  "finishedAt": "2026-11-17T20:30:20.148Z",
+  "specSha256": "b537838948f879df662a6ff8df54e2b464a07c3c7f7d5a032c2fa77e5516b5f6",
+  "phase": "flawed",
+  "comparisonExitCode": 2,
+  "comparisonExitProvenance": "Actual subprocess exit captured by the operator wrapper; separately checked against recorded outcomes.",
+  "executionCaptureSha256": "04f726e7eee9a64cf77154cd4cca88f0a013860b07f9fcaf4b8dea4b47cdf37c",
+  "originalReportSha256": "fe79e5fe925e5cb2f7d4b52eadd64b024b4a171d1bf14aef50983b8624bd5681",
+  "targets": {
+    "baseline": {
+      "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea"
+    },
+    "candidate": {
+      "version": "af4300b0c08022c4d8d75b30c8ee6aa69c2d143dd68cbeb1eb0a61cb085ea5a4"
+    }
+  },
+  "candidateSource": {
+    "files": [
+      {
+        "path": "app/candidate.js",
+        "sha256": "9046cf71cbb45c95c99a66bb779ff9cf7965ad61b7e2e9363a042fb8f6bc1e28"
+      }
+    ],
+    "stable": true
+  },
+  "provenance": "Allowlisted public summary of an actual saved Kane comparison; raw sealed packs remain private. Local L1 validation, ordered actions, observed fields, assertions and served build headers were checked independently. The flawed source was deliberately constructed for this demonstration, not a provider proposal.",
+  "checks": [
+    {
+      "id": "refresh",
+      "expected": "After the reload, Quantity is 2 and Cart total is $48.00.",
+      "outcome": "corrected",
+      "objectiveSha256": "533fded8d728325aa7313ade96a92f13059dda6bc094ea557422b97c2b51052b",
+      "observationLabels": {
+        "fp_count_readout": "Quantity",
+        "fp_total_readout": "Cart total"
+      },
+      "baseline": {
+        "verdict": "fail",
+        "category": "application",
+        "exitCode": 1,
+        "kaneCode": 740,
+        "kaneCredits": 25.537332499999998,
+        "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea",
+        "observations": {
+          "fp_count_readout": "1",
+          "fp_total_readout": "$24.00"
+        },
+        "recordedActionTypes": [
+          "navigate",
+          "click",
+          "click",
+          "navigate",
+          "wait",
+          "analyze",
+          "analyze",
+          "analyze",
+          "analyze",
+          "assert"
+        ],
+        "documentResponses": [
+          {
+            "status": 200,
+            "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea"
+          },
+          {
+            "status": 200,
+            "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea"
+          }
+        ],
+        "procedure": [
+          {
+            "type": "click",
+            "step": 2,
+            "target": "Reset cart",
+            "selector": "internal:role=button[name=\"Reset cart\"i]"
+          },
+          {
+            "type": "click",
+            "step": 3,
+            "target": "Increase quantity",
+            "selector": "internal:role=button[name=\"Increase quantity\"i]"
+          },
+          {
+            "type": "reload",
+            "step": 4
+          }
+        ],
+        "screenshot": {
+          "path": "attempts/86ed19bd-40f1-4501-8b1d-cd10250b4b92/baseline-refresh.jpg",
+          "step": "7-0-7",
+          "sha256": "d2df421dd08ab343d9b6bb0f088945bcd97f8d917924df4d217d2a1a9648ea8a"
+        },
+        "evidence": {
+          "kaneRunId": "6b2b8b31-a9e0-4349-be88-7a0801ccecfe",
+          "sha256": "2fbac6c2845a8110b59f9e19da1503478d2a34f8ac98cb702ac125f4cdfd12da",
+          "validation": "Kane L1 valid",
+          "localValidation": {
+            "valid": true,
+            "status": "finalized",
+            "exitCode": 0
+          }
+        }
+      },
+      "candidate": {
+        "verdict": "pass",
+        "category": "application",
+        "exitCode": 0,
+        "kaneCode": 100,
+        "kaneCredits": 21.3522375,
+        "version": "af4300b0c08022c4d8d75b30c8ee6aa69c2d143dd68cbeb1eb0a61cb085ea5a4",
+        "observations": {
+          "fp_count_readout": "2",
+          "fp_total_readout": "$48.00"
+        },
+        "recordedActionTypes": [
+          "navigate",
+          "click",
+          "click",
+          "navigate",
+          "analyze",
+          "analyze",
+          "analyze",
+          "analyze",
+          "assert"
+        ],
+        "documentResponses": [
+          {
+            "status": 200,
+            "version": "af4300b0c08022c4d8d75b30c8ee6aa69c2d143dd68cbeb1eb0a61cb085ea5a4"
+          },
+          {
+            "status": 200,
+            "version": "af4300b0c08022c4d8d75b30c8ee6aa69c2d143dd68cbeb1eb0a61cb085ea5a4"
+          }
+        ],
+        "procedure": [
+          {
+            "type": "click",
+            "step": 2,
+            "target": "Reset cart",
+            "selector": "internal:role=button[name=\"Reset cart\"i]"
+          },
+          {
+            "type": "click",
+            "step": 3,
+            "target": "Increase quantity",
+            "selector": "internal:role=button[name=\"Increase quantity\"i]"
+          },
+          {
+            "type": "reload",
+            "step": 4
+          }
+        ],
+        "screenshot": {
+          "path": "attempts/86ed19bd-40f1-4501-8b1d-cd10250b4b92/candidate-refresh.jpg",
+          "step": "6-0-6",
+          "sha256": "6780cbc71f39e5e3130ce2d46ab34815fc2233847a7d8e768eab6c4fcc0e3fa1"
+        },
+        "evidence": {
+          "kaneRunId": "49405dcb-8bd0-44eb-9bbe-ad525dca66a6",
+          "sha256": "3fa27115eeb2f94d9086612eda7e9fa789a43eec588f7e214ffb461c1e378c27",
+          "validation": "Kane L1 valid",
+          "localValidation": {
+            "valid": true,
+            "status": "finalized",
+            "exitCode": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "live-total",
+      "expected": "Immediately after increasing, Quantity is 2 and Cart total is $48.00.",
+      "outcome": "incomplete",
+      "objectiveSha256": "078e8bf1815924466649ab0ac4d9422248ce983ef981496c10c755231f16652f",
+      "observationLabels": {
+        "fp_count_readout": "Quantity",
+        "fp_total_readout": "Cart total"
+      },
+      "baseline": {
+        "verdict": "pass",
+        "category": "application",
+        "exitCode": 0,
+        "kaneCode": 100,
+        "kaneCredits": 19.365134999999995,
+        "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea",
+        "observations": {
+          "fp_count_readout": "2",
+          "fp_total_readout": "$48.00"
+        },
+        "recordedActionTypes": [
+          "navigate",
+          "click",
+          "click",
+          "analyze",
+          "analyze",
+          "analyze",
+          "analyze",
+          "assert"
+        ],
+        "documentResponses": [
+          {
+            "status": 200,
+            "version": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea"
+          }
+        ],
+        "procedure": [
+          {
+            "type": "click",
+            "step": 2,
+            "target": "Reset cart",
+            "selector": "internal:role=button[name=\"Reset cart\"i]"
+          },
+          {
+            "type": "click",
+            "step": 3,
+            "target": "Increase quantity",
+            "selector": "internal:role=button[name=\"Increase quantity\"i]"
+          }
+        ],
+        "screenshot": {
+          "path": "attempts/86ed19bd-40f1-4501-8b1d-cd10250b4b92/baseline-live-total.jpg",
+          "step": "5-0-5",
+          "sha256": "ec4b44c62e2767622c4ac44f175105174f8f537ac3d4b23707a71e78168d9b77"
+        },
+        "evidence": {
+          "kaneRunId": "5261f0d3-d32b-4497-99e5-6bb8a1a0568e",
+          "sha256": "f519811f5f7f176c506052968c89952933d95840f620671767a173ffade42c21",
+          "validation": "Kane L1 valid",
+          "localValidation": {
+            "valid": true,
+            "status": "finalized",
+            "exitCode": 0
+          }
+        }
+      },
+      "candidate": {
+        "verdict": "incomplete",
+        "category": "evidence",
+        "exitCode": 1,
+        "kaneCode": 740,
+        "kaneCredits": 14.9438025,
+        "version": "af4300b0c08022c4d8d75b30c8ee6aa69c2d143dd68cbeb1eb0a61cb085ea5a4",
+        "observations": {},
+        "reason": "The sealed browser actions and readouts do not substantiate all required observations.",
+        "recordedActionTypes": [
+          "navigate",
+          "click",
+          "click",
+          "wait"
+        ],
+        "documentResponses": [
+          {
+            "status": 200,
+            "version": "af4300b0c08022c4d8d75b30c8ee6aa69c2d143dd68cbeb1eb0a61cb085ea5a4"
+          }
+        ],
+        "evidence": {
+          "kaneRunId": "14f20510-9993-426b-b2eb-c285b5419042",
+          "sha256": "9d9af57565857e62224b07d9c091ca1ca67cdf0121bd3a7e4393f4b5269a83bd",
+          "validation": "Kane L1 valid",
+          "localValidation": {
+            "valid": true,
+            "status": "finalized",
+            "exitCode": 0
+          }
+        }
+      }
+    }
+  ]
+}

@@ -7,3 +7,4 @@
 *.md text eol=lf
 *.jpg binary
 *.png binary
+evidence/control-regression/reviewed-correction.diff text eol=lf
