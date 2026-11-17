@@ -2,21 +2,21 @@
 
 FixProof uses Kane CLI to check whether a proposed bug fix works **and whether it breaks behavior that used to pass**. It runs the same browser actions on a baseline and a candidate and saves the observations for review.
 
-**[Watch the 3:07 walkthrough](https://youtu.be/SW1Dju1sNsQ)** · **[Inspect the recorded evidence](evidence/control-regression/README.md)** · **[Open the local viewer](#view-the-saved-runs)**
+**[Open the recorded demo](https://elouahid.github.io/fixproof-kane/)** · [Watch the 3:07 walkthrough](https://youtu.be/SW1Dju1sNsQ) · [Inspect the evidence](evidence/control-regression/README.md) · [Run locally](#view-the-saved-runs)
 
 In the synthetic cart demo, both candidates saved the new quantity. The difference was what the customer saw immediately after clicking **Increase**. Each row is a separate run of the same case. **Select a quantity and total to see the original browser screenshot.**
 
 | Candidate and saved report | After reload | Immediately after the click | Recorded comparison exit |
 | --- | --- | --- | --- |
-| [Deliberately flawed correction](evidence/control-regression/flawed.json) | [2 items · $48][flawed-reload] · passed | **[1 item · $24][flawed-immediate] · regressed** | **1** |
-| [Reviewed correction](evidence/control-regression/reviewed.json) | [2 items · $48][reviewed-reload] · passed | **[2 items · $48][reviewed-immediate] · passed** | **0** |
+| [Deliberately flawed correction](evidence/control-regression/flawed.json) | [2 items · $48][flawed-reload] · passed | **[1 item · $24][flawed-immediate] · regressed** | **[1 · View rejection](https://elouahid.github.io/fixproof-kane/?run=flawed#evidence-2)** |
+| [Reviewed correction](evidence/control-regression/reviewed.json) | [2 items · $48][reviewed-reload] · passed | **[2 items · $48][reviewed-immediate] · passed** | **[0 · View retest](https://elouahid.github.io/fixproof-kane/?run=reviewed#evidence-2)** |
 
 [flawed-reload]: evidence/control-regression/attempts/4c562a74-0669-4e0d-a4ad-e2eb73693f8a/candidate-refresh.jpg
 [flawed-immediate]: evidence/control-regression/attempts/4c562a74-0669-4e0d-a4ad-e2eb73693f8a/candidate-live-total.jpg
 [reviewed-reload]: evidence/control-regression/attempts/0a44432b-c0fd-4179-a377-a2f3ee894d47/candidate-refresh.jpg
 [reviewed-immediate]: evidence/control-regression/attempts/0a44432b-c0fd-4179-a377-a2f3ee894d47/candidate-live-total.jpg
 
-[![The FixProof viewer showing the recorded rejection of the flawed correction and the immediate-update control.](docs/images/control-regression.png)](evidence/control-regression/README.md)
+[![Open the recorded demo showing the rejected correction and its immediate-update control.](docs/images/control-regression.png)](https://elouahid.github.io/fixproof-kane/?run=flawed)
 
 In the rejected run, the [baseline already showed 2 items and $48 immediately](evidence/control-regression/attempts/4c562a74-0669-4e0d-a4ad-e2eb73693f8a/baseline-live-total.jpg). The operator captured each comparison's process exit. Four other attempts ended incomplete and remain available alongside the two complete reports. [Run manifest](evidence/control-regression/manifest.json) · [All six attempts](evidence/control-regression/README.md#every-attempt-is-retained) · [Repair brief for the rejected fix](evidence/control-regression/repair-brief.md)
 
@@ -38,9 +38,9 @@ To inspect a different saved report, stop the server and restart it with its pat
 node app/server.mjs --report evidence/incomplete.json
 ```
 
-### Optional static preview
+### Host the static viewer
 
-To host just the two recorded comparisons, export the read-only site. This uses the same viewer and saved evidence as the local server.
+The public demo serves the two recorded comparisons from the `gh-pages` branch. To build a copy from the same viewer and saved evidence, run the export from the repository root.
 
 ```sh
 node scripts/export-preview.mjs
