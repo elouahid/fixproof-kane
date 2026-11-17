@@ -36,11 +36,18 @@ function summaryValues(observations) {
   return observations.map(row => row.label + ' ' + row.value).join(' · ');
 }
 
-function renderRow(check) {
+function evidenceId(index) {
+  return 'evidence-' + (index + 1);
+}
+
+function renderRow(check, index, runUrl) {
   const row = element('tr');
   const checkCell = element('th');
   checkCell.scope = 'row';
-  checkCell.append(element('span', checkLabels.get(check.id) ?? check.id), status(check.outcome));
+  const link = element('a', checkLabels.get(check.id) ?? check.id);
+  link.href = runUrl + '#' + evidenceId(index);
+  link.setAttribute('aria-label', link.textContent + ' evidence');
+  checkCell.append(link, status(check.outcome));
   row.append(checkCell);
   for (const side of sides) {
     const result = check[side];
@@ -96,11 +103,13 @@ function renderResult(side, result, checkName) {
   return card;
 }
 
-function renderCheck(check) {
+function renderCheck(check, index) {
   const name = checkLabels.get(check.id) ?? check.id.replaceAll('-', ' ');
   const details = element('details', undefined, 'check');
   details.append(element('summary', name + ' evidence'));
   const body = element('div', undefined, 'evidence-body');
+  body.id = evidenceId(index);
+  body.tabIndex = -1;
   const expectedHeading = element('h3', 'Expected behavior');
   body.append(expectedHeading, element('p', check.expected));
   const evidence = element('div', undefined, 'sides');
@@ -108,6 +117,16 @@ function renderCheck(check) {
   body.append(evidence);
   details.append(body);
   return details;
+}
+
+function showLinkedEvidence() {
+  const body = document.getElementById(location.hash.slice(1));
+  if (!body?.matches('#checks .evidence-body')) return;
+  const panel = body.parentElement;
+  panel.open = true;
+  const summary = panel.querySelector('summary');
+  summary.focus({ preventScroll: true });
+  summary.scrollIntoView();
 }
 
 function renderDate(proof) {
@@ -176,13 +195,16 @@ async function loadComparison() {
   if (!response.ok) throw new Error('Comparison unavailable.');
   const proof = await response.json();
   renderIntro(proof);
+  let runUrl = '';
   if (proof.recording === 'flawed' || proof.recording === 'reviewed') {
-    document.querySelector('#' + proof.recording + '-link').setAttribute('aria-current', 'page');
+    const runLink = document.querySelector('#' + proof.recording + '-link');
+    runLink.setAttribute('aria-current', 'page');
+    runUrl = runLink.href;
     const manifest = document.querySelector('#manifest-link').href;
     document.querySelector('#saved-report-link').href = new URL(proof.recording + '.json', manifest).href;
     document.querySelector('#recorded-sources').hidden = false;
   }
-  document.querySelector('#results').replaceChildren(...proof.checks.map(renderRow));
+  document.querySelector('#results').replaceChildren(...proof.checks.map((check, index) => renderRow(check, index, runUrl)));
   document.querySelector('#case-name').textContent = proof.title;
   document.querySelector('#run-id').textContent = proof.id;
   renderDate(proof);
@@ -200,6 +222,8 @@ async function loadComparison() {
   }
   document.querySelector('#comparison').hidden = false;
   document.querySelector('#loading').hidden = true;
+  window.addEventListener('hashchange', showLinkedEvidence);
+  showLinkedEvidence();
 }
 
 loadComparison().catch(() => {
