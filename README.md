@@ -4,6 +4,8 @@ FixProof uses Kane CLI to check whether a proposed bug fix works **and whether i
 
 **[Open the recorded demo](https://elouahid.github.io/fixproof-kane/)** · [Watch the 3:07 walkthrough](https://youtu.be/SW1Dju1sNsQ) · [Inspect the evidence](evidence/control-regression/README.md) · [Run locally](#view-the-saved-runs)
 
+**An independently reported bug.** On TodoMVC’s JavaScript ES5 app, clicking “Mark all” after reopening one task left **2 items active**. With a one-line local correction, the same clicks left **0**. The two-click control showed **1 item left** on both builds. One complete Kane comparison recorded all four results and exited **0**. [Open the saved TodoMVC evidence](evidence/todomvc/README.md) · [Read the upstream issue](https://github.com/tastejs/todomvc/issues/2310)
+
 In the synthetic cart demo, both candidates saved the new quantity. The difference was what the customer saw immediately after clicking **Increase**. Each row is a separate run of the same case. **Select a quantity and total to see the original browser screenshot.**
 
 | Candidate and saved report | After reload | Immediately after the click | Recorded comparison exit |

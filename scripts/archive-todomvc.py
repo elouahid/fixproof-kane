@@ -51,6 +51,29 @@ def pretty(value):
     return (json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + "\n").encode()
 
 
+def verify_build(frozen, target, side, candidate):
+    # Both fixture generations have a recorded, byte-level asset manifest.
+    # The candidate substitutes only its selected view.js in that set.
+    if side == "candidate" and not candidate["stable"]:
+        # An unstable source cannot establish this binding. The verbatim report
+        # retains that status; the HTTP capture still identifies the served build.
+        return
+    fixtures = [frozen["initialTargets"]["baseline"]]
+    revised = PUBLIC / "fixture-revision.json"
+    if revised.is_file():
+        receipt = parse(revised.read_bytes())
+        require(receipt["caseSha256"] == frozen["caseSha256"], "Fixture receipt refers to a different case.")
+        fixtures.append(receipt["builds"]["baseline"])
+    possibilities = set()
+    for fixture in fixtures:
+        manifest = {k: fixture[k] for k in ("schema", "upstream", "adapterSha256", "files")}
+        if side == "candidate":
+            manifest["files"] = {**manifest["files"], "view.js": candidate["files"][0]["sha256"]}
+        serialized = json.dumps(manifest, separators=(",", ":"), ensure_ascii=False).encode()
+        possibilities.add("sha256-" + digest(serialized))
+    require(target["version"] in possibilities, "Build does not match the recorded fixture assets and source.")
+
+
 def expect_pattern(pattern, value):
     require(isinstance(value, str) and re.fullmatch(pattern, value), "Unexpected public field value.")
 
@@ -193,6 +216,10 @@ def audit_pack(run, cli, side, spec, result, target, files, images):
         for response in parse(log("0-network.har"))["log"]["entries"]:
             request, res = response["request"], response["response"]
             headers = {h["name"].lower(): h["value"] for h in res["headers"]}
+            if res["status"] == 200:
+                require(request["url"].startswith(target["url"]) and request["method"] == "GET" and
+                        headers.get("x-fixproof-version") == target["version"],
+                        "A successful browser resource came from an unexpected build.")
             if "text/html" not in headers.get("content-type", ""):
                 continue
             require(request["url"] == target["url"] and request["method"] == "GET" and res["status"] == 200
@@ -261,6 +288,7 @@ def archive(run_id):
         same_keys(target, {"url", "version"})
         require(target["url"] == case[side+"Url"] == f"http://127.0.0.1:8771/{side}/", "Unexpected URL.")
         expect_pattern("sha256-"+SHA,target["version"])
+        verify_build(frozen, target, side, candidate)
     checks = [case["behavior"], *case["controls"]]
     objective_hashes = parse(local_node(["--input-type=module","-e",
         "import{readFileSync}from'node:fs';import{createHash}from'node:crypto';import{objectiveFor}from'./lib/objective.mjs';"

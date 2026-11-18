@@ -1,0 +1,81 @@
+{
+  "output": "fixproof-todomvc-review.mp4",
+  "sha256": "e25be76bafeda1bc0256a32f883f377152badecd77105ef8a1edbe01c2807f48",
+  "bytes": 5790877,
+  "durationSeconds": "237.188000",
+  "originalSha256": "cf23d118ab9a9000de3bbc151bdd0c08399178bcf91b459690a7acc37120f818",
+  "originalDurationSeconds": "187.229667",
+  "originalCaptionCues": 43,
+  "originalChaptersPreserved": 10,
+  "newChapters": [
+    {
+      "chapter": "TodoMVC issue 2310",
+      "start": 187.229667,
+      "end": 199.89633366666666,
+      "narration": 11.797823
+    },
+    {
+      "chapter": "Reproduce the reported failure",
+      "start": 199.89633366666666,
+      "end": 212.729667,
+      "narration": 11.977324
+    },
+    {
+      "chapter": "Review the local correction",
+      "start": 212.729667,
+      "end": 222.43800033333335,
+      "narration": 8.852744
+    },
+    {
+      "chapter": "Retest the same actions and control",
+      "start": 222.43800033333335,
+      "end": 237.18800033333335,
+      "narration": 13.883764
+    }
+  ],
+  "totalChapters": 14,
+  "decodedAudioAndVideo": true,
+  "voice": "Microsoft David Desktop, offline",
+  "publication": "Local review copy",
+  "originalAudioPacketsVerified": 8790,
+  "originalDecodedFramesVerified": 4493,
+  "originalDecodedVideoSha256": "0ab090126ee6b97c037ffbf5499799b510da852109ca8c7c96139248683c2006",
+  "addendumReadback": [
+    {
+      "chapter": "TodoMVC issue 2310",
+      "decodedFrameRms": [
+        4.562447183864768,
+        1.9111385858813181,
+        5.969947596550204
+      ],
+      "audioRmsDbfs": -19.9
+    },
+    {
+      "chapter": "Reproduce the reported failure",
+      "decodedFrameRms": [
+        4.001633433847844,
+        1.8264155469114909,
+        5.106805032394412
+      ],
+      "audioRmsDbfs": -20.2
+    },
+    {
+      "chapter": "Review the local correction",
+      "decodedFrameRms": [
+        4.511715305734616,
+        2.0379837530701215,
+        5.702167533783389
+      ],
+      "audioRmsDbfs": -19.9
+    },
+    {
+      "chapter": "Retest the same actions and control",
+      "decodedFrameRms": [
+        4.608383287854622,
+        2.0558703212454277,
+        5.736088182628375
+      ],
+      "audioRmsDbfs": -20.4
+    }
+  ]
+}

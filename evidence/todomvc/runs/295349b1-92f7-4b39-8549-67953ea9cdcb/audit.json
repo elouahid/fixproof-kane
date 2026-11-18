@@ -1,0 +1,117 @@
+{
+  "runId": "295349b1-92f7-4b39-8549-67953ea9cdcb",
+  "reportSha256": "85f78af7f10882d2e3d69063641aa110bf571cfe1844a9c284eae172d42aa080",
+  "processCaptureSha256": "1979404ede102ab1036a46c42195d0cfbc2dcb6faaf6a7b506c011c8245c709f",
+  "caseSha256": "4e7b0de1382f4e5a7023b75d7affb530f46b1056b1a168a885d99246e0dd8cc6",
+  "checks": [
+    {
+      "side": "baseline",
+      "checkId": "mark-all-after-reopening",
+      "verdict": "fail",
+      "kaneCredits": 21.054383499999997,
+      "packSha256": "827c6cb90f1f7cb89c1d3217ba8f96e336d1185fdc859e7ea4c54d5c0bf5a12d",
+      "l1Status": "valid, finalized",
+      "executedDomClicks": [
+        {
+          "step": 2,
+          "selector": "internal:role=button[name=\"Mark all as complete\"i]"
+        },
+        {
+          "step": 3,
+          "selector": "#alpha-toggle"
+        },
+        {
+          "step": 4,
+          "selector": "internal:role=button[name=\"Mark all as complete\"i]"
+        }
+      ],
+      "documentResponses": [
+        {
+          "status": 200,
+          "version": "sha256-1f9dba67c86494bbd019f8843b283233004af53ced7f4c1abe57c431ece9d538"
+        }
+      ],
+      "screenshotPackStep": "6-0-6"
+    },
+    {
+      "side": "candidate",
+      "checkId": "mark-all-after-reopening",
+      "verdict": "pass",
+      "kaneCredits": 15.093153,
+      "packSha256": "966e91458c09031749ccedd72f2a50ebe8a40374f062007645e704a601f7d05d",
+      "l1Status": "valid, finalized",
+      "executedDomClicks": [
+        {
+          "step": 2,
+          "selector": "internal:role=button[name=\"Mark all as complete\"i]"
+        },
+        {
+          "step": 3,
+          "selector": "#alpha-toggle"
+        },
+        {
+          "step": 4,
+          "selector": "internal:role=button[name=\"Mark all as complete\"i]"
+        }
+      ],
+      "documentResponses": [
+        {
+          "status": 200,
+          "version": "sha256-24778b49a471337950f699122434ac1fcbf064e095da46509d3ee7d339f5868a"
+        }
+      ],
+      "screenshotPackStep": "6-0-6"
+    },
+    {
+      "side": "baseline",
+      "checkId": "reopen-one",
+      "verdict": "pass",
+      "kaneCredits": 15.296947500000002,
+      "packSha256": "8310f531e062e5031377198a326a4765d1a0fe24c1e75357936146398ea09b02",
+      "l1Status": "valid, finalized",
+      "executedDomClicks": [
+        {
+          "step": 2,
+          "selector": "internal:role=button[name=\"Mark all as complete\"i]"
+        },
+        {
+          "step": 3,
+          "selector": "#alpha-toggle"
+        }
+      ],
+      "documentResponses": [
+        {
+          "status": 200,
+          "version": "sha256-1f9dba67c86494bbd019f8843b283233004af53ced7f4c1abe57c431ece9d538"
+        }
+      ],
+      "screenshotPackStep": "5-0-5"
+    },
+    {
+      "side": "candidate",
+      "checkId": "reopen-one",
+      "verdict": "pass",
+      "kaneCredits": 15.7762275,
+      "packSha256": "b556352d481310a91de0478153df44f301981fdb8298b03723133b74c1ccaccb",
+      "l1Status": "valid, finalized",
+      "executedDomClicks": [
+        {
+          "step": 2,
+          "selector": "internal:role=button[name=\"Mark all as complete\"i]"
+        },
+        {
+          "step": 3,
+          "selector": "#alpha-toggle"
+        }
+      ],
+      "documentResponses": [
+        {
+          "status": 200,
+          "version": "sha256-24778b49a471337950f699122434ac1fcbf064e095da46509d3ee7d339f5868a"
+        }
+      ],
+      "screenshotPackStep": "5-0-5"
+    }
+  ],
+  "creditSource": "Kane run_end meter for each browser check. A missing meter is null."
+}

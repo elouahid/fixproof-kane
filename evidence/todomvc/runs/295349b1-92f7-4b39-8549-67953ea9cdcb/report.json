@@ -1,0 +1,304 @@
+{
+  "schemaVersion": 2,
+  "caseSchemaVersion": 2,
+  "id": "295349b1-92f7-4b39-8549-67953ea9cdcb",
+  "title": "TodoMVC ES5 · Mark all after reopening one task",
+  "startedAt": "2026-11-18T01:01:14.661Z",
+  "finishedAt": "2026-11-18T01:06:11.981Z",
+  "specSha256": "4e7b0de1382f4e5a7023b75d7affb530f46b1056b1a168a885d99246e0dd8cc6",
+  "targets": {
+    "baseline": {
+      "url": "http://127.0.0.1:8771/baseline/",
+      "version": "sha256-1f9dba67c86494bbd019f8843b283233004af53ced7f4c1abe57c431ece9d538"
+    },
+    "candidate": {
+      "url": "http://127.0.0.1:8771/candidate/",
+      "version": "sha256-24778b49a471337950f699122434ac1fcbf064e095da46509d3ee7d339f5868a"
+    }
+  },
+  "checks": [
+    {
+      "id": "mark-all-after-reopening",
+      "expected": "After marking all, reopening Alpha, then marking all again, the footer reads exactly 0 items left.",
+      "objectiveSha256": "506e3b185069874f3934cfe331a6bd444faa65672af22cc5df9848458dfceedb",
+      "outcome": "corrected",
+      "observationLabels": {
+        "fp_remaining": "TodoMVC footer"
+      },
+      "baseline": {
+        "observations": {
+          "fp_remaining": "2 items left"
+        },
+        "browserActions": [
+          {
+            "type": "navigate",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "assert",
+            "status": "failed"
+          }
+        ],
+        "observationSource": "sealed browser action records",
+        "procedure": [
+          {
+            "type": "click",
+            "step": 2,
+            "target": "Mark all as complete",
+            "selector": "internal:role=button[name=\"Mark all as complete\"i]"
+          },
+          {
+            "type": "click",
+            "step": 3,
+            "target": "Alpha",
+            "selector": "#alpha-toggle"
+          },
+          {
+            "type": "click",
+            "step": 4,
+            "target": "Mark all as complete",
+            "selector": "internal:role=button[name=\"Mark all as complete\"i]"
+          }
+        ],
+        "exitCode": 1,
+        "kaneCode": 740,
+        "verdict": "fail",
+        "category": "application",
+        "version": "sha256-1f9dba67c86494bbd019f8843b283233004af53ced7f4c1abe57c431ece9d538",
+        "kaneVersion": "0.10.4",
+        "kaneCredits": 21.054383499999997,
+        "evidence": {
+          "path": "baseline/mark-all-after-reopening/run.evidence",
+          "sha256": "827c6cb90f1f7cb89c1d3217ba8f96e336d1185fdc859e7ea4c54d5c0bf5a12d"
+        },
+        "upload": "uploaded",
+        "logDirectory": "baseline/mark-all-after-reopening"
+      },
+      "candidate": {
+        "observations": {
+          "fp_remaining": "0 items left"
+        },
+        "browserActions": [
+          {
+            "type": "navigate",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "assert",
+            "status": "success"
+          }
+        ],
+        "observationSource": "sealed browser action records",
+        "procedure": [
+          {
+            "type": "click",
+            "step": 2,
+            "target": "Mark all as complete",
+            "selector": "internal:role=button[name=\"Mark all as complete\"i]"
+          },
+          {
+            "type": "click",
+            "step": 3,
+            "target": "Alpha",
+            "selector": "#alpha-toggle"
+          },
+          {
+            "type": "click",
+            "step": 4,
+            "target": "Mark all as complete",
+            "selector": "internal:role=button[name=\"Mark all as complete\"i]"
+          }
+        ],
+        "exitCode": 0,
+        "kaneCode": 100,
+        "verdict": "pass",
+        "category": "application",
+        "version": "sha256-24778b49a471337950f699122434ac1fcbf064e095da46509d3ee7d339f5868a",
+        "kaneVersion": "0.10.4",
+        "kaneCredits": 15.093153,
+        "evidence": {
+          "path": "candidate/mark-all-after-reopening/run.evidence",
+          "sha256": "966e91458c09031749ccedd72f2a50ebe8a40374f062007645e704a601f7d05d"
+        },
+        "upload": "uploaded",
+        "logDirectory": "candidate/mark-all-after-reopening"
+      }
+    },
+    {
+      "id": "reopen-one",
+      "expected": "After marking both tasks complete and reopening Alpha, the footer reads exactly 1 item left.",
+      "objectiveSha256": "9d63dbbf8a77d10c5f11dd626343d13ce41b7aede272bbfd1c243c9e59f84692",
+      "outcome": "passed in both versions",
+      "observationLabels": {
+        "fp_remaining": "TodoMVC footer"
+      },
+      "baseline": {
+        "observations": {
+          "fp_remaining": "1 item left"
+        },
+        "browserActions": [
+          {
+            "type": "navigate",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "assert",
+            "status": "success"
+          }
+        ],
+        "observationSource": "sealed browser action records",
+        "procedure": [
+          {
+            "type": "click",
+            "step": 2,
+            "target": "Mark all as complete",
+            "selector": "internal:role=button[name=\"Mark all as complete\"i]"
+          },
+          {
+            "type": "click",
+            "step": 3,
+            "target": "Alpha",
+            "selector": "#alpha-toggle"
+          }
+        ],
+        "exitCode": 0,
+        "kaneCode": 100,
+        "verdict": "pass",
+        "category": "application",
+        "version": "sha256-1f9dba67c86494bbd019f8843b283233004af53ced7f4c1abe57c431ece9d538",
+        "kaneVersion": "0.10.4",
+        "kaneCredits": 15.296947500000002,
+        "evidence": {
+          "path": "baseline/reopen-one/run.evidence",
+          "sha256": "8310f531e062e5031377198a326a4765d1a0fe24c1e75357936146398ea09b02"
+        },
+        "upload": "uploaded",
+        "logDirectory": "baseline/reopen-one"
+      },
+      "candidate": {
+        "observations": {
+          "fp_remaining": "1 item left"
+        },
+        "browserActions": [
+          {
+            "type": "navigate",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "click",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "analyze",
+            "status": "success"
+          },
+          {
+            "type": "assert",
+            "status": "success"
+          }
+        ],
+        "observationSource": "sealed browser action records",
+        "procedure": [
+          {
+            "type": "click",
+            "step": 2,
+            "target": "Mark all as complete",
+            "selector": "internal:role=button[name=\"Mark all as complete\"i]"
+          },
+          {
+            "type": "click",
+            "step": 3,
+            "target": "Alpha",
+            "selector": "#alpha-toggle"
+          }
+        ],
+        "exitCode": 0,
+        "kaneCode": 100,
+        "verdict": "pass",
+        "category": "application",
+        "version": "sha256-24778b49a471337950f699122434ac1fcbf064e095da46509d3ee7d339f5868a",
+        "kaneVersion": "0.10.4",
+        "kaneCredits": 15.7762275,
+        "evidence": {
+          "path": "candidate/reopen-one/run.evidence",
+          "sha256": "b556352d481310a91de0478153df44f301981fdb8298b03723133b74c1ccaccb"
+        },
+        "upload": "uploaded",
+        "logDirectory": "candidate/reopen-one"
+      }
+    }
+  ],
+  "candidateSource": {
+    "files": [
+      {
+        "path": "targets/todomvc/candidate/view.js",
+        "sha256": "6037c5a033f1cbe526b742a0045d14593ebf86c8eb9ab6c8d9cea892b51b0351"
+      }
+    ],
+    "stable": true
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "checkedAtUtc": "2026-11-18T00:40:28.627842+00:00",
+  "checkout": "2fab881e640f8eec15f38c97d7638e4a13d7d148",
+  "kind": "Local browser compatibility checks and readback of two existing Kane comparisons",
+  "browser": "157.0.8103.79",
+  "kaneRunsAdded": 0,
+  "nodeTest": {
+    "command": "node --test",
+    "exit": 0,
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0
+  },
+  "liveCarts": {
+    "baseline": {
+      "servedBuild": "b82cc3bc8ee2c04133b8043ea58af147cab9c504a09818441f3d5103b7a50fea",
+      "results": {
+        "refresh": {
+          "quantity": "1",
+          "total": "$24.00"
+        },
+        "live-total": {
+          "quantity": "2",
+          "total": "$48.00"
+        }
+      }
+    },
+    "candidate": {
+      "servedBuild": "ed90d3abeacec729cbb79c71c2b353729b041dcf7da8078204513e99d7ee246a",
+      "results": {
+        "refresh": {
+          "quantity": "2",
+          "total": "$48.00"
+        },
+        "live-total": {
+          "quantity": "2",
+          "total": "$48.00"
+        }
+      }
+    }
+  },
+  "savedComparisons": {
+    "flawed": {
+      "runId": "4c562a74-0669-4e0d-a4ad-e2eb73693f8a",
+      "heading": "Flawed correction rejected",
+      "recordedExit": 1,
+      "source": "Comparison process exit recorded by the operator wrapper.",
+      "table": [
+        {
+          "check": "Persistence after reload",
+          "outcome": "Corrected",
+          "baseline": [
+            "1 item \u00b7 $24.00",
+            "Failed"
+          ],
+          "candidate": [
+            "2 items \u00b7 $48.00",
+            "Passed"
+          ]
+        },
+        {
+          "check": "Immediate cart update",
+          "outcome": "Regressed",
+          "baseline": [
+            "2 items \u00b7 $48.00",
+            "Passed"
+          ],
+          "candidate": [
+            "1 item \u00b7 $24.00",
+            "Failed"
+          ]
+        }
+      ],
+      "openedScreenshotLinks": 4
+    },
+    "reviewed": {
+      "runId": "0a44432b-c0fd-4179-a377-a2f3ee894d47",
+      "heading": "Reviewed correction passed",
+      "recordedExit": 0,
+      "source": "Comparison process exit recorded by the operator wrapper.",
+      "table": [
+        {
+          "check": "Persistence after reload",
+          "outcome": "Corrected",
+          "baseline": [
+            "1 item \u00b7 $24.00",
+            "Failed"
+          ],
+          "candidate": [
+            "2 items \u00b7 $48.00",
+            "Passed"
+          ]
+        },
+        {
+          "check": "Immediate cart update",
+          "outcome": "Passed in both versions",
+          "baseline": [
+            "2 items \u00b7 $48.00",
+            "Passed"
+          ],
+          "candidate": [
+            "2 items \u00b7 $48.00",
+            "Passed"
+          ]
+        }
+      ],
+      "openedScreenshotLinks": 4
+    }
+  }
+}

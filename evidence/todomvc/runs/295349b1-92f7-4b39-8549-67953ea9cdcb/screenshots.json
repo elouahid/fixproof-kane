@@ -1,0 +1,29 @@
+{
+  "reportSha256": "85f78af7f10882d2e3d69063641aa110bf571cfe1844a9c284eae172d42aa080",
+  "images": [
+    {
+      "side": "baseline",
+      "checkId": "mark-all-after-reopening",
+      "file": "baseline-mark-all-after-reopening.jpg",
+      "sha256": "9c054db50ea7f881d01beb5f5e92958fb5aa72aaa92f95070b7b95a83f624244"
+    },
+    {
+      "side": "candidate",
+      "checkId": "mark-all-after-reopening",
+      "file": "candidate-mark-all-after-reopening.jpg",
+      "sha256": "b3c4183338d4d6aee2c5a0e38ef67373fd974f3542879598c431a0bb98230cec"
+    },
+    {
+      "side": "baseline",
+      "checkId": "reopen-one",
+      "file": "baseline-reopen-one.jpg",
+      "sha256": "3de219a925d8c947f16c4f32551d04546896ef7e722fdfbfbf7d242ff6085cd1"
+    },
+    {
+      "side": "candidate",
+      "checkId": "reopen-one",
+      "file": "candidate-reopen-one.jpg",
+      "sha256": "c390080c9da4e52b8f83790e5c3af8a2ae56f16336f15d24e552a8eebed24b17"
+    }
+  ]
+}
