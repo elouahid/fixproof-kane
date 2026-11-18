@@ -1,0 +1,69 @@
+{
+  "source_commit": "ff43b02e59dfa604386bb382034b2cd07c2bcd8a",
+  "dist": "examples\\javascript-es5\\dist",
+  "browser": "157.0.8103.79",
+  "observations": [
+    {
+      "stage": "primary-start",
+      "count": "2 items left",
+      "master": false,
+      "items": [
+        {
+          "title": "a",
+          "checked": false
+        },
+        {
+          "title": "b",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "stage": "primary-before-final",
+      "count": "1 item left",
+      "master": true,
+      "items": [
+        {
+          "title": "a",
+          "checked": false
+        },
+        {
+          "title": "b",
+          "checked": true
+        }
+      ]
+    },
+    {
+      "stage": "primary-after-final",
+      "count": "2 items left",
+      "master": false,
+      "items": [
+        {
+          "title": "a",
+          "checked": false
+        },
+        {
+          "title": "b",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "stage": "control-after-prefix",
+      "count": "1 item left",
+      "master": true,
+      "items": [
+        {
+          "title": "a",
+          "checked": false
+        },
+        {
+          "title": "b",
+          "checked": true
+        }
+      ]
+    }
+  ],
+  "start_utc": "2026-11-18T00:38:26.068351+00:00",
+  "end_utc": "2026-11-18T00:38:28.057792+00:00"
+}

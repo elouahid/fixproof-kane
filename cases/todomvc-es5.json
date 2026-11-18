@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 2,
+  "title": "TodoMVC ES5 · Mark all after reopening one task",
+  "baselineUrl": "http://127.0.0.1:8771/baseline/",
+  "candidateUrl": "http://127.0.0.1:8771/candidate/",
+  "versionHeader": "X-FixProof-Version",
+  "behavior": {
+    "id": "mark-all-after-reopening",
+    "actionContract": [
+      { "type": "click", "target": { "id": "master-toggle", "name": "Mark all as complete" } },
+      { "type": "click", "target": { "id": "alpha-toggle", "name": "Alpha" } },
+      { "type": "click", "target": { "id": "master-toggle", "name": "Mark all as complete" } }
+    ],
+    "actions": "At ${appUrl} two active tasks are ready. Perform exactly three individual DOM clicks in this order, using these exact CSS ID locators: #master-toggle (the Mark all as complete label), #alpha-toggle (the checkbox for Alpha), #master-toggle (the same label again). Stay on this page. Read the whole visible footer counter once the last click finishes.",
+    "expected": "After marking all, reopening Alpha, then marking all again, the footer reads exactly 0 items left.",
+    "observations": {
+      "fp_remaining": { "label": "TodoMVC footer", "read": "the entire visible text of the TodoMVC footer counter #remaining-count, including the number and words", "equals": "0 items left" }
+    }
+  },
+  "controls": [
+    {
+      "id": "reopen-one",
+      "actionContract": [
+        { "type": "click", "target": { "id": "master-toggle", "name": "Mark all as complete" } },
+        { "type": "click", "target": { "id": "alpha-toggle", "name": "Alpha" } }
+      ],
+      "actions": "At ${appUrl} two active tasks are ready. Perform exactly two individual DOM clicks in this order, using these exact CSS ID locators: #master-toggle (the Mark all as complete label), #alpha-toggle (the checkbox for Alpha). Stay on this page. Read the whole visible footer counter once the last click finishes.",
+      "expected": "After marking both tasks complete and reopening Alpha, the footer reads exactly 1 item left.",
+      "observations": {
+        "fp_remaining": { "label": "TodoMVC footer", "read": "the entire visible text of the TodoMVC footer counter #remaining-count, including the number and words", "equals": "1 item left" }
+      }
+    }
+  ]
+}

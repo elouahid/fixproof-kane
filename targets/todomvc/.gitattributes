@@ -1,0 +1,3 @@
+upstream/** -text
+candidate/view.js -text
+licenses/** -text
