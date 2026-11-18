@@ -1,0 +1,17 @@
+{
+  "command": [
+    "node",
+    "compare.mjs",
+    "cases/todomvc-es5.json",
+    "--candidate-source",
+    "targets/todomvc/candidate/view.js"
+  ],
+  "id": "8680b040-e985-4090-b39f-3e161d99cd51",
+  "startedAt": "2026-11-18T00:54:33.757Z",
+  "finishedAt": "2026-11-18T00:59:50.254Z",
+  "comparisonExitCode": 1,
+  "signal": null,
+  "reportSha256": "8d97eacf4abb93dfdf094998d0ea50d1fca548023046630e8b4bfed85d48f018",
+  "caseSha256": "4e7b0de1382f4e5a7023b75d7affb530f46b1056b1a168a885d99246e0dd8cc6",
+  "provenance": "Exit code from the Node child process that ran compare.mjs for this report."
+}
