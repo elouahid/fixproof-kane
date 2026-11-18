@@ -14,7 +14,7 @@ Codex developed FixProof and made the local TodoMVC edit from the exported brief
 
 ## Recording guide
 
-The local review MP4 runs **3:57.188**. The first 3:07 is the existing cart walkthrough. The new segment uses offline synthetic English narration and selectable captions. To review just the addition, start at **3:07**. The verified file is `fixproof-todomvc-review.mp4` (5,790,877 bytes). [Media checksum, timing and verification](todomvc-video.json) · [Original cart recording guide](RECORDING.md)
+The final walkthrough runs **3:57.188** with Puck’s synthetic English narration. The cart demonstration occupies the first 3:07. The TodoMVC issue, correction and retest follow. The selected upload file is `fixproof-puck-voice.mp4` (7,027,201 bytes), SHA-256 `d0592bc919e74a307b224f8e068fcd009001d21c80eb7eab17da74113dbcbf42`. It preserves the 14 chapters and 55 caption cues of the earlier review export. [Full walkthrough](https://youtu.be/y7mjjVRgMPk) · [Start at TodoMVC](https://youtu.be/y7mjjVRgMPk?t=187) · [Earlier review export receipt](todomvc-video.json) · [Original cart recording guide](RECORDING.md)
 
 **3:07–3:20 · Open the original issue.** Show the issue heading and scenario 2. [Issue #2310](https://github.com/tastejs/todomvc/issues/2310)
 
@@ -36,4 +36,4 @@ The local review MP4 runs **3:57.188**. The first 3:07 is the existing cart walk
 
 The external result covers scenario 2 of TodoMVC issue #2310, on the pinned ES5 build in Chrome. The correction is local. The review package retains both incomplete executions and the original complete reports. [Upstream issue](https://github.com/tastejs/todomvc/issues/2310) · [All four attempts](../evidence/todomvc/README.md#all-four-comparisons)
 
-The existing submission points to the published repository, cart preview and 3:07 walkthrough. Review the new local video and source together before choosing which revision to publish. The requested publication target is **November 19, 2026 at 17:00 Casablanca**. The official deadline is **19:29 Casablanca** that day. [Published source](https://github.com/elouahid/fixproof-kane) · [Published cart preview](https://elouahid.github.io/fixproof-kane/) · [Published video](https://youtu.be/SW1Dju1sNsQ) · [Organizer schedule](https://www.kaneclihack.sh/)
+The original submission used the cart walkthrough. Its source tag and video remain available. The organizer’s deadline is **November 19, 2026 at 19:29 Casablanca**. [Original submission source](https://github.com/elouahid/fixproof-kane/tree/kane-2026-submission) · [Original 3:07 cart video](https://youtu.be/SW1Dju1sNsQ) · [Organizer schedule](https://www.kaneclihack.sh/)

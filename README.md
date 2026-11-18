@@ -2,7 +2,7 @@
 
 FixProof uses Kane CLI to check whether a proposed bug fix works **and whether it breaks behavior that used to pass**. It runs the same browser actions on a baseline and a candidate and saves the observations for review.
 
-**[Open the recorded demo](https://elouahid.github.io/fixproof-kane/)** · [Watch the 3:07 walkthrough](https://youtu.be/SW1Dju1sNsQ) · [Inspect the evidence](evidence/control-regression/README.md) · [Run locally](#view-the-saved-runs)
+**[Watch the 3:57 walkthrough](https://youtu.be/y7mjjVRgMPk)** · [Open the TodoMVC retest](https://elouahid.github.io/fixproof-kane/?run=todomvc) · [Open the cart regression](https://elouahid.github.io/fixproof-kane/?run=flawed) · [Run locally](#view-the-saved-runs)
 
 **An independently reported bug.** On TodoMVC’s JavaScript ES5 app, clicking “Mark all” after reopening one task left **2 items active**. With a one-line local correction, the same clicks left **0**. The two-click control showed **1 item left** on both builds. One complete Kane comparison recorded all four results and exited **0**. [Open the saved TodoMVC evidence](evidence/todomvc/README.md) · [Read the upstream issue](https://github.com/tastejs/todomvc/issues/2310)
 
@@ -30,7 +30,7 @@ From the repository root, start the viewer with **Node.js 20 or later**. Viewing
 node app/server.mjs
 ```
 
-Open the [flawed correction](http://127.0.0.1:8741/?run=flawed) or the [reviewed correction](http://127.0.0.1:8741/?run=reviewed). Both are available on the same server. The home page opens the flawed comparison. The viewer shows the recorded run ID, readouts, and tested build fingerprints. The recorded exit is unavailable when the viewer cannot verify its source.
+Open the flawed cart correction, the reviewed cart correction, or the TodoMVC retest. The home page opens the flawed cart comparison. Each report shows its recorded run ID, browser readouts, and tested build fingerprints. The recorded exit is unavailable when the viewer cannot verify its source. [Flawed cart](http://127.0.0.1:8741/?run=flawed) · [Reviewed cart](http://127.0.0.1:8741/?run=reviewed) · [TodoMVC](http://127.0.0.1:8741/?run=todomvc)
 
 The local server also serves a [current baseline cart](http://127.0.0.1:8741/baseline/) and a [current reviewed candidate cart](http://127.0.0.1:8741/candidate/). These interactive pages use the JavaScript in this checkout. Inspect the [deliberately flawed source snapshot](evidence/control-regression/deliberately-flawed-candidate.js) to see the version that omitted the immediate redraw.
 
@@ -42,7 +42,7 @@ node app/server.mjs --report evidence/incomplete.json
 
 ### Host the static viewer
 
-The public demo serves the two recorded comparisons from the `gh-pages` branch. To build a copy from the same viewer and saved evidence, run the export from the repository root.
+The public demo serves all three recorded comparisons from the `gh-pages` branch. To build a copy from the same viewer and saved evidence, run the export from the repository root.
 
 ```sh
 node scripts/export-preview.mjs
