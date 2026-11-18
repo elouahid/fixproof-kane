@@ -8,6 +8,7 @@ import { join } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { loadRecordedDemo } from '../app/recorded-demo.mjs';
+import { attachReportArtifacts } from '../app/report-artifacts.mjs';
 
 async function startServer(t, args = []) {
   const script = fileURLToPath(new URL('../app/server.mjs', import.meta.url));
@@ -77,6 +78,7 @@ test('a selected report is projected without exposing its files or account metad
   assert.doesNotMatch(body, /private@example|private-token|private-logs|secret-pack\.evidence/);
   const view = JSON.parse(body);
   assert.equal(view.kind, 'saved');
+  assert.equal(view.currentCarts, false);
   assert.equal(view.comparisonExit, null);
   assert.equal(view.id, id);
   assert.equal(view.title, report.title);
@@ -103,6 +105,65 @@ test('a selected report is projected without exposing its files or account metad
   const screenshot = await fetch(new URL('/proof/browser/baseline-refresh.jpg', address), { method: 'HEAD' });
   assert.equal(screenshot.status, 200);
   assert.equal(screenshot.headers.get('content-type'), 'image/jpeg');
+});
+
+test('selected report binds its process receipt and optional browser screenshots to the exact run', async (t) => {
+  const directory = await mkdtemp(join(tmpdir(), 'fixproof artifacts '));
+  const reportFile = join(directory, 'report.json');
+  const captureFile = join(directory, 'process-capture.json');
+  const manifestFile = join(directory, 'screenshots.json');
+  const imageFile = join(directory, 'baseline-save.jpg');
+  t.after(async () => {
+    await Promise.all([reportFile, captureFile, manifestFile, imageFile].map((file) => unlink(file)));
+    await rmdir(directory);
+  });
+  const report = {
+    id: '1970c397-7f20-4871-b24c-3d21adeacfb8', title: 'External target', specSha256: 'f'.repeat(64),
+    targets: {}, checks: [{ id: 'save', expected: 'Saved', outcome: 'incomplete' }],
+  };
+  const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
+  const bytes = JSON.stringify(report);
+  const jpeg = await readFile(new URL('../evidence/browser/baseline-refresh.jpg', import.meta.url));
+  const capture = {
+    id: report.id, reportSha256: hash(bytes), caseSha256: report.specSha256,
+    comparisonExitCode: 2, signal: null, provenance: 'private metadata must stay local',
+  };
+  const manifest = { reportSha256: hash(bytes), images: [
+    { side: 'baseline', checkId: 'save', file: 'baseline-save.jpg', sha256: hash(jpeg) },
+    { side: 'candidate', checkId: 'save', file: '../baseline-save.jpg', sha256: hash(jpeg) },
+  ] };
+  await Promise.all([
+    writeFile(reportFile, bytes), writeFile(captureFile, JSON.stringify(capture)),
+    writeFile(manifestFile, JSON.stringify(manifest)), writeFile(imageFile, jpeg),
+  ]);
+  const address = await startServer(t, ['--report', reportFile]);
+  const getView = (url) => fetch(new URL('proof/report.json', url)).then((reply) => reply.json());
+  const view = await getView(address);
+  assert.equal(view.currentCarts, false);
+  assert.equal(view.comparisonExit.code, 2);
+  assert.equal(view.comparisonExit.captureSha256, hash(JSON.stringify(capture)));
+  assert.doesNotMatch(view.comparisonExit.provenance, /private/);
+  const attached = view.checks[0].baseline.screenshot;
+  const served = await fetch(new URL('proof/' + attached, address));
+  assert.deepEqual(Buffer.from(await served.arrayBuffer()), jpeg);
+  assert.equal(view.checks[0].candidate.screenshot, undefined);
+
+  for (const variation of [
+    { id: 'another-run' }, { caseSha256: 'b'.repeat(64) },
+    { signal: 'SIGINT' }, { comparisonExitCode: '0' }, { comparisonExitCode: 3 },
+  ]) {
+    const partial = { comparisonExit: null, checks: [] };
+    await writeFile(captureFile, JSON.stringify({ ...capture, ...variation }));
+    await attachReportArtifacts(directory, Buffer.from(bytes), report, partial);
+    assert.equal(partial.comparisonExit, null);
+  }
+  await writeFile(captureFile, JSON.stringify(capture));
+
+  // Even a whitespace-only change to the selected report invalidates both sidecars.
+  await writeFile(reportFile, bytes + '\n');
+  const changed = await getView(await startServer(t, ['--report', reportFile]));
+  assert.equal(changed.comparisonExit, null);
+  assert.equal(changed.checks[0].baseline.screenshot, undefined);
 });
 
 const evidence = new URL('../evidence/control-regression/', import.meta.url);

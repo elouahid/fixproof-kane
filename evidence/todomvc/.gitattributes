@@ -1,0 +1,4 @@
+# Preserve original evidence bytes and the JSON bytes used by process receipts.
+reproduction/observations.json -text
+runs/*/report.json -text
+runs/*/process-capture.json -text

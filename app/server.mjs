@@ -1,8 +1,10 @@
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
+import { dirname } from 'node:path';
 import { exampleImageNames, exampleView } from './report-view.mjs';
 import { loadRecordedDemo } from './recorded-demo.mjs';
+import { attachReportArtifacts } from './report-artifacts.mjs';
 
 const host = '127.0.0.1';
 const port = Number(process.env.FIXPROOF_CART_PORT ?? 8741);
@@ -24,9 +26,18 @@ const [recorded, unavailable, demo] = await Promise.all([
 ]);
 const example = exampleView(recorded, unavailable);
 let selected;
+let selectedImages = new Map();
 if (reportPath) {
   try {
-    selected = await demo.projectReport(await readFile(reportPath));
+    const bytes = await readFile(reportPath);
+    const report = JSON.parse(bytes);
+    selected = await demo.projectReport(bytes);
+    // Known recordings are already bound to the cart manifest and its screenshots.
+    const knownCart = Boolean(selected.comparisonExit);
+    const cartUrls = ['baseline', 'candidate'].every((side) =>
+      report.targets[side]?.url === `http://127.0.0.1:8741/${side}/`);
+    selected = { ...selected, currentCarts: knownCart || cartUrls };
+    if (!knownCart) selectedImages = await attachReportArtifacts(dirname(reportPath), bytes, report, selected);
   } catch (error) {
     const reason = error instanceof SyntaxError ? 'Invalid JSON.' : error.code ?? error.message;
     console.error(`Could not open the selected FixProof report. ${reason}`);
@@ -66,13 +77,13 @@ resources.set('/example/', { ...preview, body: preview.body.replace('data-entry=
 resources.set('/example/proof.css', resources.get('/proof.css'));
 resources.set('/example/proof.js', resources.get('/proof.js'));
 
-const jsonResource = (view) => ({ body: JSON.stringify({ ...view, currentCarts: true }), type: 'application/json; charset=utf-8' });
+const jsonResource = (view) => ({ body: JSON.stringify({ currentCarts: true, ...view }), type: 'application/json; charset=utf-8' });
 resources.set('/proof/report.json', jsonResource(selected ?? demo.reports.flawed));
 resources.set('/proof/example.json', jsonResource(example));
 for (const [name, view] of Object.entries(demo.reports)) {
   resources.set(`/proof/${name}.json`, jsonResource(view));
 }
-for (const [path, body] of demo.images) {
+for (const [path, body] of [...demo.images, ...selectedImages]) {
   resources.set(`/proof/${path}`, { body, type: 'image/jpeg' });
 }
 
