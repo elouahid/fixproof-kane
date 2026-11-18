@@ -6,6 +6,8 @@ const verdictLabels = { pass: 'Passed', fail: 'Failed', incomplete: 'Incomplete'
 const checkLabels = new Map([
   ['refresh', 'Persistence after reload'],
   ['live-total', 'Immediate cart update'],
+  ['mark-all-after-reopening', 'Mark all after reopening a task'],
+  ['reopen-one', 'Reopen one completed task'],
 ]);
 const tones = new Map([
   ['corrected', 'good'], ['pass', 'good'], ['passed in both versions', 'good'],
@@ -160,6 +162,10 @@ function renderIntro(proof) {
     source = 'Recorded comparison · Synthetic cart';
     headline.textContent = 'Reviewed correction passed';
     explanation = 'In this separate run, the restored candidate updated the cart immediately and retained the change after reload.';
+  } else if (proof.recording === 'todomvc' && exit?.code === 0) {
+    source = 'Recorded comparison · TodoMVC JavaScript ES5';
+    headline.textContent = 'Mark all after reopening a task';
+    explanation = 'The original app left both tasks active. The local correction completed both, and reopening one task still worked on each build.';
   } else if (exit?.code === 2) {
     explanation = 'The recorded comparison was incomplete. See each check for the available evidence.';
   }
@@ -168,6 +174,11 @@ function renderIntro(proof) {
   document.querySelector('#source-label').textContent = source;
   const copy = document.querySelector('#explanation');
   copy.textContent = explanation;
+  if (proof.recording === 'todomvc') {
+    const issue = element('a', 'TodoMVC issue #2310');
+    issue.href = 'https://github.com/tastejs/todomvc/issues/2310';
+    copy.append(' ', issue);
+  }
   copy.hidden = !explanation;
   const badge = document.querySelector('#exit-badge');
   badge.textContent = exit ? 'Exit ' + exit.code : 'Exit unavailable';
@@ -186,22 +197,31 @@ function renderIntro(proof) {
 async function loadComparison() {
   const run = new URLSearchParams(location.search).get('run');
   document.querySelector('#home-link').href = appRoot.href;
-  for (const key of ['flawed', 'reviewed']) {
+  const recordings = ['flawed', 'reviewed', 'todomvc'];
+  for (const key of recordings) {
     document.querySelector('#' + key + '-link').href = new URL('?run=' + key, appRoot).href;
   }
-  if (run !== null && run !== 'flawed' && run !== 'reviewed') throw new Error('Unknown recorded comparison.');
+  if (run !== null && !recordings.includes(run)) throw new Error('Unknown recorded comparison.');
   const file = run ?? (legacyRoute ? 'example' : 'report');
   const response = await fetch(new URL('proof/' + file + '.json', appRoot));
   if (!response.ok) throw new Error('Comparison unavailable.');
   const proof = await response.json();
   renderIntro(proof);
   let runUrl = '';
-  if (proof.recording === 'flawed' || proof.recording === 'reviewed') {
+  if (recordings.includes(proof.recording)) {
     const runLink = document.querySelector('#' + proof.recording + '-link');
     runLink.setAttribute('aria-current', 'page');
     runUrl = runLink.href;
-    const manifest = document.querySelector('#manifest-link').href;
-    document.querySelector('#saved-report-link').href = new URL(proof.recording + '.json', manifest).href;
+    const source = document.querySelector('#manifest-link');
+    const saved = document.querySelector('#saved-report-link');
+    if (proof.recording === 'todomvc') {
+      const directory = 'https://github.com/elouahid/fixproof-kane/blob/d378c32ef89b6beef37702212142790edd23ecb7/evidence/todomvc/runs/' + proof.id + '/';
+      source.href = directory + 'process-capture.json';
+      source.textContent = 'Process receipt';
+      saved.href = directory + 'report.json';
+    } else {
+      saved.href = new URL(proof.recording + '.json', source.href).href;
+    }
     document.querySelector('#recorded-sources').hidden = false;
   }
   document.querySelector('#results').replaceChildren(...proof.checks.map((check, index) => renderRow(check, index, runUrl)));

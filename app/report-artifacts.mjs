@@ -25,7 +25,7 @@ async function jsonArtifact(path) {
   }
 }
 
-export async function attachReportArtifacts(directory, bytes, report, view) {
+export async function attachReportArtifacts(directory, bytes, report, view, imageDirectory = 'selected') {
   const hash = digest(bytes);
   const [receipt, screenshots] = await Promise.all([
     jsonArtifact(join(directory, 'process-capture.json')),
@@ -52,7 +52,7 @@ export async function attachReportArtifacts(directory, bytes, report, view) {
       if (entries.length !== 1 || entries[0].file !== file || !isDigest(entries[0].sha256)) continue;
       const image = await optionalFile(join(directory, file), 16 * 1024 * 1024);
       if (!image || image[0] !== 0xff || image[1] !== 0xd8 || digest(image) !== entries[0].sha256) continue;
-      const route = `selected/${file}`;
+      const route = `${imageDirectory}/${file}`;
       check[side].screenshot = route;
       images.set(route, image);
     }

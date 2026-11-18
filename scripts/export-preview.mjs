@@ -13,8 +13,8 @@ for (const [source, destination] of [
 ]) {
   files.set(destination, await readFile(new URL(source, app)));
 }
-for (const name of ['flawed', 'reviewed']) {
-  files.set(`proof/${name}.json`, JSON.stringify({ ...reports[name], currentCarts: false }));
+for (const [name, report] of Object.entries(reports)) {
+  files.set(`proof/${name}.json`, JSON.stringify({ ...report, currentCarts: false }));
 }
 files.set('proof/report.json', files.get('proof/flawed.json'));
 for (const [path, bytes] of images) {
@@ -43,4 +43,4 @@ for (const [path, bytes] of files) {
   await mkdir(dirname(destination), { recursive: true });
   await writeFile(destination, bytes);
 }
-console.log('Saved both recorded comparisons to dist/preview/. Serve this folder with a static HTTP server.');
+console.log('Saved the recorded cart and TodoMVC comparisons to dist/preview/. Serve this folder with a static HTTP server.');

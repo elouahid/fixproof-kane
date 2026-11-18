@@ -1,5 +1,7 @@
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { attachReportArtifacts } from './report-artifacts.mjs';
 import { reportView } from './report-view.mjs';
 
 const directory = new URL('../evidence/control-regression/', import.meta.url);
@@ -53,6 +55,19 @@ export async function loadRecordedDemo() {
     reports[name] = view;
     curatedById.set(view.id, view);
   }
+
+  const todoRun = '295349b1-92f7-4b39-8549-67953ea9cdcb';
+  const todoDirectory = new URL(`../todomvc/runs/${todoRun}/`, directory);
+  const todoBytes = await readFile(new URL('report.json', todoDirectory));
+  const todo = JSON.parse(todoBytes);
+  const todoView = reportView(todo);
+  const todoImages = await attachReportArtifacts(fileURLToPath(todoDirectory), todoBytes, todo, todoView, `recordings/${todoRun}`);
+  if (todoView.id !== todoRun || digest(todoBytes) !== '85f78af7f10882d2e3d69063641aa110bf571cfe1844a9c284eae172d42aa080' ||
+      todoView.comparisonExit?.code !== 0 || todoImages.size !== 4) {
+    throw new Error('The recorded TodoMVC comparison does not match its completed run and four captures.');
+  }
+  reports.todomvc = { ...todoView, recording: 'todomvc', currentCarts: false };
+  for (const [route, bytes] of todoImages) images.set(route, bytes);
 
   async function projectReport(bytes) {
     const report = JSON.parse(bytes);

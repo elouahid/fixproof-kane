@@ -211,3 +211,25 @@ test('recorded subprocess exits follow the exact report bytes, including incompl
     assert.equal(modified.checks[0].candidate.screenshot, undefined);
   }
 });
+
+test('TodoMVC recording serves its own four captures and recorded exit', async (t) => {
+  const address = await startServer(t);
+  const view = await fetch(new URL('proof/todomvc.json', address)).then((reply) => reply.json());
+  const run = '295349b1-92f7-4b39-8549-67953ea9cdcb';
+  const folder = new URL(`../evidence/todomvc/runs/${run}/`, import.meta.url);
+  const receipt = await readFile(new URL('process-capture.json', folder));
+  const { images } = JSON.parse(await readFile(new URL('screenshots.json', folder)));
+  assert.equal(view.id, run);
+  assert.equal(view.recording, 'todomvc');
+  assert.equal(view.currentCarts, false);
+  assert.equal(view.comparisonExit.code, 0);
+  assert.equal(view.comparisonExit.captureSha256, createHash('sha256').update(receipt).digest('hex'));
+  assert.deepEqual(view.checks.map((check) => check.outcome), ['corrected', 'passed in both versions']);
+  for (const image of images) {
+    const check = view.checks.find((item) => item.id === image.checkId);
+    const route = check[image.side].screenshot;
+    assert.equal(route, `recordings/${run}/${image.file}`);
+    const response = await fetch(new URL('proof/' + route, address));
+    assert.equal(createHash('sha256').update(Buffer.from(await response.arrayBuffer())).digest('hex'), image.sha256);
+  }
+});
