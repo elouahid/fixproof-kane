@@ -6,7 +6,12 @@
   model.create("Beta");
 
   const list = document.querySelector(".todo-list");
-  document.querySelector(".toggle-all-label").id = "master-toggle";
+  const master = document.querySelector(".toggle-all-label");
+  master.id = "master-toggle";
+  // The upstream label runs the bulk action through its own click handler.
+  // Use its original text as the accessible name, excluding the CSS arrow.
+  master.setAttribute("role", "button");
+  master.setAttribute("aria-label", master.textContent.trim());
   document.querySelector(".todo-count").id = "remaining-count";
   // The application owns the rows and may replace them after a filter change.
   new MutationObserver(() => {

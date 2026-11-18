@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 2,
+  "caseSchemaVersion": 2,
+  "id": "15b9bd8e-a344-4718-b856-d03ea3e0201b",
+  "title": "TodoMVC ES5 · Mark all after reopening one task",
+  "startedAt": "2026-11-18T00:41:08.912Z",
+  "finishedAt": "2026-11-18T00:46:33.706Z",
+  "specSha256": "4e7b0de1382f4e5a7023b75d7affb530f46b1056b1a168a885d99246e0dd8cc6",
+  "targets": {
+    "baseline": {
+      "url": "http://127.0.0.1:8771/baseline/",
+      "version": "sha256-fd4b928fd5e96b533f9b0ad7e951aa2f75ac4f7171a79cc47673682754f62895"
+    },
+    "candidate": {
+      "url": "http://127.0.0.1:8771/candidate/",
+      "version": "sha256-fd4b928fd5e96b533f9b0ad7e951aa2f75ac4f7171a79cc47673682754f62895"
+    }
+  },
+  "checks": [
+    {
+      "id": "mark-all-after-reopening",
+      "expected": "After marking all, reopening Alpha, then marking all again, the footer reads exactly 0 items left.",
+      "objectiveSha256": "506e3b185069874f3934cfe331a6bd444faa65672af22cc5df9848458dfceedb",
+      "outcome": "incomplete",
+      "observationLabels": {
+        "fp_remaining": "TodoMVC footer"
+      },
+      "baseline": {
+        "observations": {},
+        "browserActions": [],
+        "observationSource": null,
+        "exitCode": 1,
+        "kaneCode": 710,
+        "verdict": "incomplete",
+        "category": "evidence",
+        "reason": "Action 1 must be a confirmed DOM click on Mark all as complete.",
+        "version": "sha256-fd4b928fd5e96b533f9b0ad7e951aa2f75ac4f7171a79cc47673682754f62895",
+        "kaneVersion": "0.10.4",
+        "kaneCredits": 23.805690000000002,
+        "evidence": {
+          "path": "baseline/mark-all-after-reopening/run.evidence",
+          "sha256": "74b59050b914073e7bbb126a29f3a60d7e979c45d69e87886bd7a60222ee32f2"
+        },
+        "upload": "uploaded",
+        "logDirectory": "baseline/mark-all-after-reopening"
+      },
+      "candidate": {
+        "observations": {},
+        "browserActions": [],
+        "observationSource": null,
+        "exitCode": 1,
+        "kaneCode": 740,
+        "verdict": "incomplete",
+        "category": "evidence",
+        "reason": "Action 1 must be a confirmed DOM click on Mark all as complete.",
+        "version": "sha256-fd4b928fd5e96b533f9b0ad7e951aa2f75ac4f7171a79cc47673682754f62895",
+        "kaneVersion": "0.10.4",
+        "kaneCredits": 23.80997,
+        "evidence": {
+          "path": "candidate/mark-all-after-reopening/run.evidence",
+          "sha256": "dba2cbff67847f5b2ce70f671464427436eb931812352ded43d77ed613602d26"
+        },
+        "upload": "uploaded",
+        "logDirectory": "candidate/mark-all-after-reopening"
+      }
+    },
+    {
+      "id": "reopen-one",
+      "expected": "After marking both tasks complete and reopening Alpha, the footer reads exactly 1 item left.",
+      "objectiveSha256": "9d63dbbf8a77d10c5f11dd626343d13ce41b7aede272bbfd1c243c9e59f84692",
+      "outcome": "incomplete",
+      "observationLabels": {
+        "fp_remaining": "TodoMVC footer"
+      },
+      "baseline": {
+        "observations": {},
+        "browserActions": [],
+        "observationSource": null,
+        "exitCode": 0,
+        "kaneCode": 100,
+        "verdict": "incomplete",
+        "category": "evidence",
+        "reason": "Action 1 must be a confirmed DOM click on Mark all as complete.",
+        "version": "sha256-fd4b928fd5e96b533f9b0ad7e951aa2f75ac4f7171a79cc47673682754f62895",
+        "kaneVersion": "0.10.4",
+        "kaneCredits": 18.6498425,
+        "evidence": {
+          "path": "baseline/reopen-one/run.evidence",
+          "sha256": "a365db0200e0cf71b7e4db04695c8efe0268ea6d9c9fbfc40058d7f5f90a3ce5"
+        },
+        "upload": "uploaded",
+        "logDirectory": "baseline/reopen-one"
+      },
+      "candidate": {
+        "observations": {},
+        "browserActions": [],
+        "observationSource": null,
+        "exitCode": 0,
+        "kaneCode": 100,
+        "verdict": "incomplete",
+        "category": "evidence",
+        "reason": "Action 1 must be a confirmed DOM click on Mark all as complete.",
+        "version": "sha256-fd4b928fd5e96b533f9b0ad7e951aa2f75ac4f7171a79cc47673682754f62895",
+        "kaneVersion": "0.10.4",
+        "kaneCredits": 18.8911575,
+        "evidence": {
+          "path": "candidate/reopen-one/run.evidence",
+          "sha256": "011a3a129b7fc293aeb8782e687e858d3a9af08da5e84d4748215f33da363c7f"
+        },
+        "upload": "uploaded",
+        "logDirectory": "candidate/reopen-one"
+      }
+    }
+  ],
+  "candidateSource": {
+    "files": [
+      {
+        "path": "targets/todomvc/candidate/view.js",
+        "sha256": "0d731d4ef1f4af7a570f82418fd698f26aba516d52c40dc0ca2a6a47dd81a977"
+      }
+    ],
+    "stable": true
+  }
+}
